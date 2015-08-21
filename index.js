@@ -4,10 +4,7 @@
 module.exports = {
   name: 'ember-cli-yadda',
   included: function(app) {
-    this.__super.included(app);
-    app.import('yadda');
-  },
-  includedCommands: function () {
-
+    // this._super.included(app);
+    // app.import('node_modules/yadda', {type: 'test'});
   }
 };
