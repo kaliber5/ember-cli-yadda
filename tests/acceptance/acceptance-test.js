@@ -1,9 +1,7 @@
-import {Yadda, featureFile, scenarios } from 'yadda';
 import Ember from 'ember';
 import { module, test } from 'qunit';
+import {Yadda, featureFile, scenarios } from '../helpers/yadda-0.15.2';
 import startApp from '/tests/helpers/start-app';
-
-Yadda.plugins.mocha.StepLevelPlugin.init();
 
 new Yadda.FeatureFileSearch('./').each(function(file) {
 
