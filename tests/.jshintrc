@@ -24,7 +24,10 @@
     "currentRouteName",
     "Yadda",
     "featureFile",
-    "scenarios"
+    "scenarios",
+    "FeatureFileSearch",
+    "yaddayadda",
+    "require"
   ],
   "node": false,
   "browser": false,

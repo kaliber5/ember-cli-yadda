@@ -1,6 +1,9 @@
 import Ember from 'ember';
 import Application from '../../app';
 import config from '../../config/environment';
+import yadda from './yadda';
+
+yadda();
 
 export default function startApp(attrs) {
   var application;

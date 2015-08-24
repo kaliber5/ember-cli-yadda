@@ -1,15 +1,14 @@
 /* global require, module */
 var EmberApp = require('ember-cli/lib/broccoli/ember-addon');
-// var isProduction = EmberApp.env() === 'production';
 
 module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     // Add options here
   });
-    // app.import('yadda', { type: 'test' } );
-  // if ( !isProduction ) {
-  //   app.import('npm:yadda', { type: 'test' } );
-  // }
+
+  //if ( app.env === 'test') {
+    app.import('vendor/yadda-0.15.2.js', { type: 'test' });
+  //}
   /*
     This build file specifes the options for the dummy test app of this
     addon, located in `/tests/dummy`
