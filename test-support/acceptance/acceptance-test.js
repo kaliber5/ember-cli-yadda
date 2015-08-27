@@ -33,10 +33,9 @@ features.forEach(function(feature) {
     });
 
     feature.scenarios.forEach(function(scenario) {
-      console.log(JSON.stringify(scenario));
       test(`Scenario: ${scenario.title}`, function(assert) {
         expect(scenario.steps.length);
-        yadda(library.default(assert), scenario);
+        runScenario(library.default(assert), scenario);
       });
     });
   });

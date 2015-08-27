@@ -10,4 +10,4 @@ Scenario: Maak er nog maar s een
 
   Given I type "Ember g feature make-feature"
   When I look in the folder
-  Then I should find a file
+  Then I should find a file or two

@@ -6,9 +6,6 @@ module.exports = function(defaults) {
     // Add options here
   });
 
-  //if ( app.env === 'test') {
-    app.import('vendor/yadda-0.15.2.js', { type: 'test' });
-  //}
   /*
     This build file specifes the options for the dummy test app of this
     addon, located in `/tests/dummy`
