@@ -50,8 +50,8 @@
     "features"
   ],
   "dependencies": {
-    "ember-cli-babel": "^5.1.3",
-    "yadda": "^0.15.2"
+    "broccoli-filter": "^1.2.2",
+    "ember-cli-babel": "^5.1.3"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"

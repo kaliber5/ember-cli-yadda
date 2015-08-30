@@ -1,13 +1,13 @@
 Feature: make feature
 
-Scenario: Maak er eerst maar s een
+  Scenario: Maak er eerst maar s een
 
-  Given I type "Ember g feature make-feature"
-  When I look in the folder
-  Then I should find a file
+    Given I type "Ember g feature make-feature"
+    When I look in the folder
+    Then I should find a file
 
-Scenario: Maak er nog maar s een
+  Scenario: Maak er nog maar s een
 
-  Given I type "Ember g feature make-feature"
-  When I look in the folder
-  Then I should find a file or two
+    Given I type "Ember g feature make-feature"
+    When I look in the folder
+    Then I should find a file or two

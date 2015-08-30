@@ -1,12 +1,7 @@
-// import Ember from 'ember';
-//import { assert } from 'qunit';
-// import startApp from '/tests/helpers/start-app';
-// import { localisation } from 'yadda';
-
-const English = require('yadda').localisation.English;
+import { localisation } from 'yadda';
 
 export default function(assert) {
-   return English.library()
+   return localisation.English.library()
     .given('(I type "Ember g feature make-feature")', function(step) {
       assert.ok(true, step);
     })

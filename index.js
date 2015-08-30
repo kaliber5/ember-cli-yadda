@@ -1,45 +1,42 @@
 var yadda = require('yadda');
-var fs = require('fs');
-var BMergeTrees = require('broccoli-merge-trees');
-var Funnel = require('broccoli-funnel');
+var Filter = require('broccoli-filter');
+var path = require('path');
+
 /* jshint node: true */
 'use strict';
 
+// voorbeeld van de brocolli-filter readme. bah en bah
+FeatureParser.prototype = Object.create(Filter.prototype);
+FeatureParser.prototype.constructor = FeatureParser;
+function FeatureParser(inputNode) {
+  Filter.call(this, inputNode);
+}
+FeatureParser.prototype.extensions = ['feature', 'spec', 'specification'];
+FeatureParser.prototype.targetExtension = 'js';
+FeatureParser.prototype.processString = function(content, relativePath) {
+  var feature = new yadda.parsers.FeatureParser().parse(content);
+  var head = 'import testFeature from "../helpers/test-feature";testFeature(';
+  var foot = ');';
+  return head + JSON.stringify(feature, null, 2) + foot;
+};
+FeatureParser.prototype.getDestFilePath = function (relativePath) {
+  var ext = path.extname(relativePath);
+  if(ext === '.feature' || ext === '.spec' || ext === '.specifiation') {
+    console.log(relativePath.replace(ext, '-test.js'));
+    return relativePath.replace(ext, '-test.js');
+  }
+  return null;
+};
+
 module.exports = {
   name: 'ember-cli-yadda',
-  // preBuild: function() {
-  //   var features = [];
-  //   new yadda
-  //     .FeatureFileSearch('tests/acceptance')
-  //     .each(function(file) {
-  //         features.push(new yadda.parsers.FeatureFileParser().parse(file));
-  //     });
-  //   console.log(features);
-  //   return new Promise(function(resolve, reject) {
-  //     return fs.writeFile('test-support/acceptance/features.js', 'export default ' + JSON.stringify(features) + ';', function(err) {
-  //       if(err) {
-  //         reject(err);
-  //       }
-  //       resolve();
-  //     });
-  //   });
-  // },
-  treeForTestSupport: function(tree) {
-    var features = [];
-    new yadda
-      .FeatureFileSearch('tests/acceptance')
-      .each(function(file) {
-          features.push(new yadda.parsers.FeatureFileParser().parse(file));
-      });
-    return new Promise(function(resolve, reject) {
-      return fs.writeFile('tmp/features/acceptance/features.js', 'export default ' + JSON.stringify(features) + ';', function(err) {
-        if(err) {
-          reject(err);
-        }
-        resolve();
-      });
-    }).then(function() {
-      return new BMergeTrees(['tree', 'tmp/features'])
+  setupPreprocessorRegistry: function(type, registry) {
+    registry.add('js', {
+      name: 'ember-cli-yadda',
+      ext: ['feature', 'spec', 'specification'],
+      toTree: function(tree, inputPath, outputPath) {
+        return new FeatureParser(tree);
+      }
     });
   },
   included: function(app) {
@@ -48,7 +45,8 @@ module.exports = {
       type: 'test',
       exports: {
         'yadda': [
-          'createInstance'
+          'createInstance',
+          'localisation'
         ]
       }
     });
