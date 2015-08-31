@@ -47,7 +47,6 @@ FeatureParser.prototype.processString = function(content, relativePath) {
 FeatureParser.prototype.getDestFilePath = function (relativePath) {
   var ext = path.extname(relativePath);
   if(ext === '.feature' || ext === '.spec' || ext === '.specifiation') {
-    console.log(relativePath.replace(ext, '-test.js'));
     return relativePath.replace(ext, '-test.js');
   }
   return null;
@@ -63,6 +62,9 @@ module.exports = {
         return new FeatureParser(tree);
       }
     });
+  },
+  postBuild: function(result) {
+    result.directory
   },
   included: function(app) {
     this._super.included(app);
