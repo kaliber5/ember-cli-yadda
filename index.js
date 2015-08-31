@@ -18,7 +18,7 @@ FeatureParser.prototype.processString = function(content, relativePath) {
   var head = [
     "import Ember from 'ember';",
     "import { module, test } from 'qunit';",
-    "import { createInstance } from 'yadda';",
+    "import { createInstance } from 'npm:yadda';",
     "import * as library from './steps/" + feature.title.replace(/\s/,'-') + "-steps';",
     "import startApp from '../helpers/start-app';",
 
