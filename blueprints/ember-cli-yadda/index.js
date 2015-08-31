@@ -1,5 +1,5 @@
 module.exports = {
-  description: '',
+  description: 'ember-cli-yadda',
   normalizeEntityName: function() {
     // this prevents an error when the entityName is
     // not specified (since that doesn't actually matter

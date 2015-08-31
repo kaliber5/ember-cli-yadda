@@ -1,5 +1,5 @@
 module.exports = {
-  description: '',
+  description: 'Adds a feature to the project',
   locals: function(options) {
     return {
       featureName: options.entity.name.replace(/-/g, ' ')
