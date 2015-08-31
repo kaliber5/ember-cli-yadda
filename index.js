@@ -19,7 +19,7 @@ FeatureParser.prototype.processString = function(content, relativePath) {
     "import Ember from 'ember';",
     "import { module, test } from 'qunit';",
     "import yadda from '../helpers/yadda';",
-    "import * as library from './steps/" + feature.title.replace(/\s/,'-') + "-steps';",
+    "import * as library from './steps/" + feature.title.replace(/\s/g,'-') + "-steps';",
     "import startApp from '../helpers/start-app';",
     "",
     "function testFeature(feature) {",
