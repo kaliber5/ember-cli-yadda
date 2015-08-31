@@ -5,7 +5,7 @@ import steps from './steps';
 
 export default function(assert) {
   return steps(assert)
-    .given('a scenario', function () {
+    .given('a scenario', function() {
       assert.ok(true, this.step);
     });
 }
