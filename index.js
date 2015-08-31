@@ -18,11 +18,11 @@ FeatureParser.prototype.processString = function(content, relativePath) {
   var head = [
     "import Ember from 'ember';",
     "import { module, test } from 'qunit';",
-    "import { createInstance } from 'yadda';",
+    "import yadda from '../helpers/yadda';",
     "import * as library from './steps/" + feature.title.replace(/\s/,'-') + "-steps';",
     "import startApp from '../helpers/start-app';",
-
-    "function yadda(feature) {",
+    "",
+    "function testFeature(feature) {",
     "  module(`Feature: ${feature.title}`, {",
     "    beforeEach: function() {",
     "      this.application = startApp();",
@@ -35,11 +35,12 @@ FeatureParser.prototype.processString = function(content, relativePath) {
     "  feature.scenarios.forEach(function(scenario) {",
     "    test(`Scenario: ${scenario.title}`, function(assert) {",
     "      expect(scenario.steps.length);",
-    "      createInstance(library.default(assert)).run(scenario.steps);",
+    "      yadda.Yadda(library.default(assert)).yadda(scenario.steps);",
     "    });",
     "  });",
     "};",
-    "yadda("
+    "",
+    "testFeature("
   ].join('\n');
   var foot = ');';
   return head + JSON.stringify(feature, null, 2) + foot;
@@ -63,20 +64,9 @@ module.exports = {
       }
     });
   },
-  postBuild: function(result) {
-    result.directory
-  },
   included: function(app) {
     this._super.included(app);
-    app.import(app.bowerDirectory + '/yadda/dist/yadda-0.15.1.js', {
-      type: 'test',
-      exports: {
-        'yadda': [
-          'createInstance',
-          'localisation'
-        ]
-      }
-    });
+    app.import(app.bowerDirectory + '/yadda/dist/yadda-0.15.1.js', { type: 'test' });
   },
   isDevelopingAddon: function() {
    return true;
