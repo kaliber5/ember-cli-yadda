@@ -1,7 +1,11 @@
 {
   "name": "ember-cli-yadda",
-  "version": "0.0.1",
-  "description": "Ember-cli yadda addon for running Gherkin acceptance tests",
+  "version": "0.0.0",
+  "description": "The default blueprint for ember-cli addons.",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
   "scripts": {
     "build": "ember build",
     "start": "ember server",
@@ -15,7 +19,6 @@
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.1.2",
-    "broccoli-filter": "^1.2.2",
     "broccoli-funnel": "^0.2.8",
     "broccoli-merge-trees": "^0.2.3",
     "ember-cli": "1.13.8",
@@ -34,9 +37,7 @@
     "ember-disable-prototype-extensions": "^1.0.0",
     "ember-disable-proxy-controllers": "^1.0.0",
     "ember-export-application-global": "^1.0.3",
-    "ember-suave": "1.0.0",
-    "ember-try": "0.0.6",
-    "yadda": "^0.15.2"
+    "ember-try": "0.0.6"
   },
   "keywords": [
     "ember-addon",
@@ -48,7 +49,10 @@
     "specifications",
     "features"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "broccoli-filter": "^1.2.2",
+    "ember-cli-babel": "^5.1.3"
+  },
   "ember-addon": {
     "configPath": "tests/dummy/config"
   }

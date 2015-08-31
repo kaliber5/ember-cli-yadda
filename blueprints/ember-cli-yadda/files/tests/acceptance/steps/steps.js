@@ -1,5 +1,5 @@
-import yadda from '../../helpers/yadda';
+import { localisation } from 'yadda';
 
 export default function(assert) {
-  return yadda.localisation.English.library();
+  return localisation.English.library();
 }
