@@ -39,6 +39,7 @@ FeatureParser.prototype.processString = function(content, relativePath) {
     "    });",
     "  });",
     "};",
+    "",
     "yadda("
   ].join('\n');
   var foot = ');';
