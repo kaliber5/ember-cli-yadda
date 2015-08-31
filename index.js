@@ -21,7 +21,7 @@ FeatureParser.prototype.processString = function(content, relativePath) {
     "import { createInstance } from 'yadda';",
     "import * as library from './steps/" + feature.title.replace(/\s/,'-') + "-steps';",
     "import startApp from '../helpers/start-app';",
-
+    "",
     "function yadda(feature) {",
     "  module(`Feature: ${feature.title}`, {",
     "    beforeEach: function() {",
