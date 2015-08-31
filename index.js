@@ -15,7 +15,32 @@ FeatureParser.prototype.extensions = ['feature', 'spec', 'specification'];
 FeatureParser.prototype.targetExtension = 'js';
 FeatureParser.prototype.processString = function(content, relativePath) {
   var feature = new yadda.parsers.FeatureParser().parse(content);
-  var head = 'import testFeature from "../helpers/test-feature";testFeature(';
+  var head = [
+    "import Ember from 'ember';",
+    "import { module, test } from 'qunit';",
+    "import { createInstance } from 'yadda';",
+    "import * as library from './steps/" + feature.title.replace(/\s/,'-') + "-steps';",
+    "import startApp from '../helpers/start-app';",
+
+    "function yadda(feature) {",
+    "  module(`Feature: ${feature.title}`, {",
+    "    beforeEach: function() {",
+    "      this.application = startApp();",
+    "    },",
+    "    afterEach: function() {",
+    "      Ember.run(this.application, 'destroy');",
+    "    }",
+    "  });",
+
+    "  feature.scenarios.forEach(function(scenario) {",
+    "    test(`Scenario: ${scenario.title}`, function(assert) {",
+    "      expect(scenario.steps.length);",
+    "      createInstance(library.default(assert)).run(scenario.steps);",
+    "    });",
+    "  });",
+    "};",
+    "yadda("
+  ].join('\n');
   var foot = ');';
   return head + JSON.stringify(feature, null, 2) + foot;
 };
