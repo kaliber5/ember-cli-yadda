@@ -1,5 +1,10 @@
 module.exports = {
-  description: ''
+  description: '',
+  normalizeEntityName: function() {
+    // this prevents an error when the entityName is
+    // not specified (since that doesn't actually matter
+    // to us
+  },
 
   // locals: function(options) {
   //   // Return custom template variables here.
@@ -8,7 +13,11 @@ module.exports = {
   //   };
   // }
 
-  // afterInstall: function(options) {
-  //   // Perform extra work here.
-  // }
+  afterInstall: function() {
+      var addonContext = this;
+
+      return this.addBowerPackagesToProject([
+        { name: 'yadda',           source: 'acuminous/yadda',                     target: '~0.15.1' },
+      ]);
+    }
 };
