@@ -5,7 +5,9 @@ export default function(assert) {
     .given('I type "Ember g feature make-feature"', function(next) {
       visit('/');
       assert.ok(true, this.step);
-      andThen(() => next());
+      andThen(function() {
+        next();
+      });
     })
     .when('I look in the folder', function(next) {
       assert.ok(true, this.step);
