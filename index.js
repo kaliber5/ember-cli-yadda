@@ -35,7 +35,7 @@ FeatureParser.prototype.processString = function(content, relativePath) {
     "  feature.scenarios.forEach(function(scenario) {",
     "    test(`Scenario: ${scenario.title}`, function(assert) {",
     "      expect(scenario.steps.length);",
-    "      yadda.Yadda(library.default(assert)).yadda(scenario.steps);",
+    "      return new Ember.RSVP.Promise(function (resolve) { yadda.Yadda(library.default(assert), this).yadda(scenario.steps, resolve); });",
     "    });",
     "  });",
     "};",
