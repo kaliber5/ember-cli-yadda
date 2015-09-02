@@ -11,7 +11,7 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "CURIT, remkoboschker, albertjan",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.1.2",
@@ -48,7 +48,6 @@
     "specifications",
     "features"
   ],
-  "dependencies": {},
   "ember-addon": {
     "configPath": "tests/dummy/config"
   }
