@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/curit/ember-cli-yadda.svg)](https://travis-ci.org/curit/ember-cli-yadda)
-
+[![Ember Observer Score](http://emberobserver.com/badges/ember-cli-yadda.svg)](http://emberobserver.com/addons/ember-cli-yadda)
 # Ember-cli-yadda
 
 This ember-cli addon facilitates writing acceptance tests in the Gherkin language and executing them against your Ember app.
