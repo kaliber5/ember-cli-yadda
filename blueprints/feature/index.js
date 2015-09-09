@@ -1,26 +1,30 @@
 module.exports = {
   description: 'Adds a feature to the project',
+
   locals: function(options) {
-    console.log(options);
     return {
-      featureName: options.entity.name.replace(/-/g, ' ')
+      // normalizedEntityName has been dasherized, featureName removes the dashes.
+      featureName: options.entity.name.replace(/-/g, ' '),
+      // lose the last section of the path /folder1/folder2/featureName
+      // dasherize if path contains any spaces
+      // do not forget the trailing slash
+      folder: options.args[1].split('/').slice(0, -1).join('/').replace(/\s/g, '-') + '/',
+      // relative path to go back up to the tests/acceptance/steps folder
+      foldersUp: (options.args[1].split('/').slice(0, -1).join('/') + '/').replace(/.+?\//g, '../')
     };
-  }
+  },
 
-  // locals: function(options) {
-  //   // Return custom template variables here.
-  //   return {
-  //     foo: options.entity.options.foo
-  //   };
-  // }
+  normalizeEntityName: function(name) {
+    // use the last section of the path /folder1/folder2/featureName
+    // featureName can contain spaces when the arg is enclosed by quotes
+    return name.split('/').pop().replace(/\s/g, '-');
+  },
 
-  // afterInstall: function(options) {
-  //   // Perform extra work here.
-  // }
-  // https://github.com/ember-cli/ember-cli/blob/34789821fe7e132812f9fb6809b2969be98cd977/lib/models/blueprint.js
   fileMapTokens: function(options) {
     return {
-      __token__ : {}
+      __folder__: function(options) {
+        return options.locals.folder;
+      }
     }
   }
 };
