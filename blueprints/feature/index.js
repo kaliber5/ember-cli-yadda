@@ -1,19 +1,30 @@
 module.exports = {
   description: 'Adds a feature to the project',
+
   locals: function(options) {
     return {
-      featureName: options.entity.name.replace(/-/g, ' ')
+      // normalizedEntityName has been dasherized, featureName removes the dashes.
+      featureName: options.entity.name.replace(/-/g, ' '),
+      // lose the last section of the path /folder1/folder2/featureName
+      // dasherize if path contains any spaces
+      // do not forget the trailing slash
+      folder: options.args[1].split('/').slice(0, -1).join('/').replace(/\s/g, '-') + '/',
+      // relative path to go back up to the tests/acceptance/steps folder
+      foldersUp: (options.args[1].split('/').slice(0, -1).join('/') + '/').replace(/.+?\//g, '../')
     };
+  },
+
+  normalizeEntityName: function(name) {
+    // use the last section of the path /folder1/folder2/featureName
+    // featureName can contain spaces when the arg is enclosed by quotes
+    return name.split('/').pop().replace(/\s/g, '-');
+  },
+
+  fileMapTokens: function(options) {
+    return {
+      __folder__: function(options) {
+        return options.locals.folder;
+      }
+    }
   }
-
-  // locals: function(options) {
-  //   // Return custom template variables here.
-  //   return {
-  //     foo: options.entity.options.foo
-  //   };
-  // }
-
-  // afterInstall: function(options) {
-  //   // Perform extra work here.
-  // }
 };

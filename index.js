@@ -15,12 +15,16 @@ FeatureParser.prototype.extensions = ['feature', 'spec', 'specification'];
 FeatureParser.prototype.targetExtension = 'js';
 FeatureParser.prototype.processString = function(content, relativePath) {
   var feature = new yadda.parsers.FeatureParser().parse(content);
+  var basePath = relativePath.split('/').slice(0,2).join('/');
+  var nestedPath = relativePath.split('/').length > 4 ? relativePath.split('/').slice(3,-1).join('/') + '/' : '';
+  var stepsPath = basePath + "/acceptance/steps/";
+  var fileName =relativePath.split('/').slice(-1)[0].split('.')[0]; //remove extension
   var head = [
     "import Ember from 'ember';",
     "import { module, test } from 'qunit';",
-    "import yadda from '../helpers/yadda';",
-    "import * as library from './steps/" + feature.title.replace(/\s/g,'-') + "-steps';",
-    "import startApp from '../helpers/start-app';",
+    "import yadda from '" + basePath + "/helpers/yadda';",
+    "import * as library from '" + stepsPath + nestedPath + fileName + "-steps';",
+    "import startApp from '" + basePath + "/helpers/start-app';",
     "",
     "function testFeature(feature) {",
     "  module(`Feature: ${feature.title}`, {",
@@ -66,7 +70,7 @@ module.exports = {
   },
   included: function(app) {
     this._super.included(app);
-    app.import(app.bowerDirectory + '/yadda/dist/yadda-0.15.1.js', { type: 'test' });
+    app.import(app.bowerDirectory + '/yadda/dist/yadda-0.15.3.js', { type: 'test' });
   },
   isDevelopingAddon: function() {
    return true;
