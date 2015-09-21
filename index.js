@@ -27,7 +27,7 @@ FeatureParser.prototype.processString = function(content, relativePath) {
     "import startApp from '" + basePath + "/helpers/start-app';",
     "",
     "function testFeature(feature) {",
-    "  module(`Feature: ${feature.title}`, {",
+    "  module('Feature: ${feature.title}', {",
     "    beforeEach: function() {",
     "      this.application = startApp();",
     "    },",
@@ -37,7 +37,7 @@ FeatureParser.prototype.processString = function(content, relativePath) {
     "  });",
 
     "  feature.scenarios.forEach(function(scenario) {",
-    "    test(`Scenario: ${scenario.title}`, function(assert) {",
+    "    test('Scenario: ${scenario.title}', function(assert) {",
     "      expect(scenario.steps.length);",
     "      return new Ember.RSVP.Promise(function (resolve) { yadda.Yadda(library.default(assert), this).yadda(scenario.steps, resolve); });",
     "    });",
