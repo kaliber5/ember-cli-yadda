@@ -10,7 +10,13 @@ module.exports = {
       // do not forget the trailing slash
       folder: options.args[1].split('/').slice(0, -1).join('/').replace(/\s/g, '-') + '/',
       // relative path to go back up to the tests/acceptance/steps folder
-      foldersUp: (options.args[1].split('/').slice(0, -1).join('/') + '/').replace(/.+?\//g, '../')
+      foldersUp: (function () {
+        var path = options.args[1].split('/').slice(0, -1).join('/')
+        if (path === '') {
+          return './';
+        }
+        return (path + '/').replace(/.+?\//g, '../')
+      }())
     };
   },
 
