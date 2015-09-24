@@ -70,7 +70,7 @@ module.exports = {
   },
   included: function(app) {
     this._super.included(app);
-    app.import(app.bowerDirectory + '/yadda/dist/yadda-0.15.3.js', { type: 'test' });
+    app.import(app.bowerDirectory + '/yadda/dist/yadda-0.15.4.js', { type: 'test' });
   },
   isDevelopingAddon: function() {
    return true;
