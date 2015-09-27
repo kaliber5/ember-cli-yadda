@@ -39,7 +39,7 @@ FeatureParser.prototype.processString = function(content, relativePath) {
     "  feature.scenarios.forEach(function(scenario) {",
     "    test(`Scenario: ${scenario.title}`, function(assert) {",
     "      expect(scenario.steps.length);",
-    "      return new Ember.RSVP.Promise(function (resolve) { yadda.Yadda(library.default(assert), this).yadda(scenario.steps, resolve); });",
+    "      return new Ember.RSVP.Promise(function (resolve) { yadda.Yadda(library.default(assert), this).yadda(scenario.steps, { ctx: {} }, resolve); });",
     "    });",
     "  });",
     "};",
@@ -70,7 +70,7 @@ module.exports = {
   },
   included: function(app) {
     this._super.included(app);
-    app.import(app.bowerDirectory + '/yadda/dist/yadda-0.15.3.js', { type: 'test' });
+    app.import(app.bowerDirectory + '/yadda/dist/yadda-0.15.4.js', { type: 'test' });
   },
   isDevelopingAddon: function() {
    return true;

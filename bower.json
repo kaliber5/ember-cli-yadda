@@ -11,6 +11,6 @@
     "jquery": "^1.11.3",
     "loader.js": "ember-cli/loader.js#3.2.1",
     "qunit": "~1.18.0",
-    "yadda": "acuminous/yadda#~0.15.1"
+    "yadda": "acuminous/yadda#~0.15.4"
   }
 }

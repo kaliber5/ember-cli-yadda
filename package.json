@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-yadda",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Ember-cli yadda addon for running Gherkin acceptance tests",
   "scripts": {
     "build": "ember build",
@@ -36,7 +36,7 @@
   "dependencies": {
     "broccoli-filter": "^1.2.2",
     "ember-cli-babel": "^5.1.5",
-    "yadda": "^0.15.2"
+    "yadda": "^0.15.4"
   },
   "keywords": [
     "ember-addon",
