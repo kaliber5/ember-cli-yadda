@@ -8,7 +8,8 @@ var path = require('path');
 // voorbeeld van de brocolli-filter readme. bah en bah
 FeatureParser.prototype = Object.create(Filter.prototype);
 FeatureParser.prototype.constructor = FeatureParser;
-function FeatureParser(inputNode) {
+function FeatureParser(inputNode, testFramework) {
+  this.testFramework = testFramework;
   Filter.call(this, inputNode);
 }
 FeatureParser.prototype.extensions = ['feature', 'spec', 'specification'];
@@ -21,28 +22,12 @@ FeatureParser.prototype.processString = function(content, relativePath) {
   var fileName =relativePath.split('/').slice(-1)[0].split('.')[0]; //remove extension
   var head = [
     "import Ember from 'ember';",
-    "import { module, test } from 'qunit';",
+    this.getTestFrameworkImport(),
     "import yadda from '" + basePath + "/helpers/yadda';",
     "import * as library from '" + stepsPath + nestedPath + fileName + "-steps';",
     "import startApp from '" + basePath + "/helpers/start-app';",
     "",
-    "function testFeature(feature) {",
-    "  module(`Feature: ${feature.title}`, {",
-    "    beforeEach: function() {",
-    "      this.application = startApp();",
-    "    },",
-    "    afterEach: function() {",
-    "      Ember.run(this.application, 'destroy');",
-    "    }",
-    "  });",
-
-    "  feature.scenarios.forEach(function(scenario) {",
-    "    test(`Scenario: ${scenario.title}`, function(assert) {",
-    "      expect(scenario.steps.length);",
-    "      return new Ember.RSVP.Promise(function (resolve) { yadda.Yadda(library.default(assert), this).yadda(scenario.steps, { ctx: {} }, resolve); });",
-    "    });",
-    "  });",
-    "};",
+    this.getTestFeature(),
     "",
     "testFeature("
   ].join('\n');
@@ -56,17 +41,83 @@ FeatureParser.prototype.getDestFilePath = function (relativePath) {
   }
   return null;
 };
+FeatureParser.prototype.getTestFrameworkImport = function() {
+  switch (this.testFramework) {
+    case 'mocha':
+      return 'import { afterEach, beforeEach, describe, it } from \'mocha\';';
+    default: // qunit
+      return 'import { module, test } from \'qunit\';';
+  }
+};
+FeatureParser.prototype.getTestFeature = function() {
+  var testFeature;
+  switch (this.testFramework) {
+    case 'mocha':
+      testFeature = [
+        "function testFeature(feature) {",
+        "  describe(`Feature: ${feature.title}`, () => {",
+        "    beforeEach(function() {",
+        "      this.application = startApp();",
+        "    });",
+        "    afterEach(function() {",
+        "      Ember.run(this.application, 'destroy');",
+        "    });",
+        "    ",
+        "    feature.scenarios.forEach(function(scenario) {",
+        "      it(`Scenario: ${scenario.title}`, function() {",
+        "        return new Ember.RSVP.Promise(function(resolve) { yadda.Yadda(library.default(), this).yadda(scenario.steps, { ctx: {} }, resolve); });",
+        "      });",
+        "    });",
+        "  });",
+        "};"
+      ];
+      break;
+    default: // qunit
+      testFeature = [
+        "function testFeature(feature) {",
+        "  module(`Feature: ${feature.title}`, {",
+        "    beforeEach: function() {",
+        "      this.application = startApp();",
+        "    },",
+        "    afterEach: function() {",
+        "      Ember.run(this.application, 'destroy');",
+        "    }",
+        "  });",
+
+        "  feature.scenarios.forEach(function(scenario) {",
+        "    test(`Scenario: ${scenario.title}`, function(assert) {",
+        "      expect(scenario.steps.length);",
+        "      return new Ember.RSVP.Promise(function (resolve) { yadda.Yadda(library.default(assert), this).yadda(scenario.steps, { ctx: {} }, resolve); });",
+        "    });",
+        "  });",
+        "};"
+      ];
+  }
+  return testFeature.join('\n');
+};
 
 module.exports = {
   name: 'ember-cli-yadda',
+  getTestFramework: function() {
+    var packages = Object.keys(this.project.addonPackages);
+    if (packages.indexOf('ember-cli-mocha') > -1) {
+      return 'mocha';
+    } else {
+      return 'qunit';
+    }
+  },
   setupPreprocessorRegistry: function(type, registry) {
+    var testFramework = this.getTestFramework();
     registry.add('js', {
       name: 'ember-cli-yadda',
       ext: ['feature', 'spec', 'specification'],
       toTree: function(tree, inputPath, outputPath) {
-        return new FeatureParser(tree);
+        return new FeatureParser(tree, testFramework);
       }
     });
+  },
+  blueprintsPath: function() {
+    return path.join(__dirname, 'blueprints', this.getTestFramework());
   },
   included: function(app) {
     this._super.included(app);
