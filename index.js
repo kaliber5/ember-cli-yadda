@@ -99,7 +99,12 @@ FeatureParser.prototype.getTestFeature = function() {
 module.exports = {
   name: 'ember-cli-yadda',
   getTestFramework: function() {
-    return require(path.join(process.cwd(), 'testem.json')).framework;
+    var packages = Object.keys(this.project.addonPackages);
+    if (packages.indexOf('ember-cli-mocha') > -1) {
+      return 'mocha';
+    } else {
+      return 'qunit';
+    }
   },
   setupPreprocessorRegistry: function(type, registry) {
     var testFramework = this.getTestFramework();
