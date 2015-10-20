@@ -18,7 +18,6 @@ ember g feature make-a-feature
 This adds yadda to your node modules and your bower plugins. It also adds the following files:
 
 ```
-/tests/helpers/yadda.js
 /tests/acceptance/steps/steps.js
 /tests/acceptance/steps/make-a-feature-steps.js
 /tests/acceptance/make-a-feature.feature
