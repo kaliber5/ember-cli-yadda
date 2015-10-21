@@ -1,1 +1,1 @@
-module.exports = require('../../feature-unit-index');
+module.exports = require('../../feature-unit-index.js');
