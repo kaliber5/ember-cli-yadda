@@ -27,14 +27,6 @@ FeatureParser.prototype.processString = function(content, relativePath) {
   var unitModule = testType === 'unit'? inflected.singularize(unitType)+':'+fileName : false;
   var stepsPath = basePath + "/"+testType+"/steps/" ;
 
-  // console.log('relativePath',relativePath);
-  // console.log('nestedPath', nestedPath);
-  // console.log('unitType',unitType,'unitIndex',unitIndex,'unitModule',unitModule);
-  // console.log('stepsPath', stepsPath);
-  // console.log('fileName',fileName);
-  // console.log('library',stepsPath + nestedPath + fileName + "-steps';");
-  // console.log('------------------------------');
-
   var head = [
     "import Ember from 'ember';",
     this.getTestFrameworkImport(),
@@ -48,7 +40,6 @@ FeatureParser.prototype.processString = function(content, relativePath) {
   ].join('\n');
   var foot = ');';
 
-  // if(unitModule) console.log(head + JSON.stringify(feature, null, 2) + foot);
   return head + JSON.stringify(feature, null, 2) + foot;
 };
 FeatureParser.prototype.getDestFilePath = function (relativePath) {
