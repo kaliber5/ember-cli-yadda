@@ -1,6 +1,7 @@
 var yadda = require('yadda');
 var Filter = require('broccoli-filter');
 var path = require('path');
+var inflected = require( 'inflected' );
 
 /* jshint node: true */
 'use strict';
@@ -18,8 +19,22 @@ FeatureParser.prototype.processString = function(content, relativePath) {
   var feature = new yadda.parsers.FeatureParser().parse(content);
   var basePath = relativePath.split('/').slice(0,2).join('/');
   var nestedPath = relativePath.split('/').length > 4 ? relativePath.split('/').slice(3,-1).join('/') + '/' : '';
-  var stepsPath = basePath + "/acceptance/steps/";
-  var fileName =relativePath.split('/').slice(-1)[0].split('.')[0]; //remove extension
+  var fileName = relativePath.split('/').slice(-1)[0].split('.')[0]; //remove extension
+
+  var unitIndex = relativePath.split('/').indexOf('unit');
+  var testType = unitIndex === -1? 'acceptance' : 'unit'; // Find if the current test is an acceptance or unit test
+  var unitType = testType === 'unit'? relativePath.split('/').slice(unitIndex+1,unitIndex+2)[0] : false;
+  var unitModule = testType === 'unit'? inflected.singularize(unitType)+':'+fileName : false;
+  var stepsPath = basePath + "/"+testType+"/steps/" ;
+
+  // console.log('relativePath',relativePath);
+  // console.log('nestedPath', nestedPath);
+  // console.log('unitType',unitType,'unitIndex',unitIndex,'unitModule',unitModule);
+  // console.log('stepsPath', stepsPath);
+  // console.log('fileName',fileName);
+  // console.log('library',stepsPath + nestedPath + fileName + "-steps';");
+  // console.log('------------------------------');
+
   var head = [
     "import Ember from 'ember';",
     this.getTestFrameworkImport(),
@@ -27,11 +42,13 @@ FeatureParser.prototype.processString = function(content, relativePath) {
     "import * as library from '" + stepsPath + nestedPath + fileName + "-steps';",
     "import startApp from '" + basePath + "/helpers/start-app';",
     "",
-    this.getTestFeature(),
+    this.getTestFeature(unitModule, fileName),
     "",
     "testFeature("
   ].join('\n');
   var foot = ');';
+
+  // if(unitModule) console.log(head + JSON.stringify(feature, null, 2) + foot);
   return head + JSON.stringify(feature, null, 2) + foot;
 };
 FeatureParser.prototype.getDestFilePath = function (relativePath) {
@@ -46,10 +63,11 @@ FeatureParser.prototype.getTestFrameworkImport = function() {
     case 'mocha':
       return 'import { afterEach, beforeEach, describe, it } from \'mocha\';';
     default: // qunit
-      return 'import { module, test } from \'qunit\';';
+      return 'import { moduleFor, moduleForComponent, test } from \'ember-qunit\';\
+              import {module} from \'qunit\';';
   }
 };
-FeatureParser.prototype.getTestFeature = function() {
+FeatureParser.prototype.getTestFeature = function(unitModule,fileName ) {
   var testFeature;
   switch (this.testFramework) {
     case 'mocha':
@@ -73,25 +91,49 @@ FeatureParser.prototype.getTestFeature = function() {
       ];
       break;
     default: // qunit
-      testFeature = [
-        "function testFeature(feature) {",
-        "  module(`Feature: ${feature.title}`, {",
-        "    beforeEach: function() {",
-        "      this.application = startApp();",
-        "    },",
-        "    afterEach: function() {",
-        "      Ember.run(this.application, 'destroy');",
-        "    }",
-        "  });",
+      if(unitModule && unitModule.indexOf('component') === 0){
+        testFeature = [
+          "function testFeature(feature) {",
+          "  moduleForComponent('"+fileName+"', `Feature: ${feature.title}`,{",
+          "     unit:true",
+          "});",
 
-        "  feature.scenarios.forEach(function(scenario) {",
-        "    test(`Scenario: ${scenario.title}`, function(assert) {",
-        "      expect(scenario.steps.length);",
-        "      return new Ember.RSVP.Promise(function (resolve) { yadda.Yadda(library.default(assert), this).yadda(scenario.steps, { ctx: {} }, resolve); });",
-        "    });",
-        "  });",
-        "};"
-      ];
+          "  feature.scenarios.forEach(function(scenario) {",
+          "    test(`Scenario: ${scenario.title}`, function(assert) {",
+          "      expect(scenario.steps.length);",
+          "      return new Ember.RSVP.Promise(function(resolve){ yadda.Yadda(library.default(assert), this).yadda(scenario.steps, { ctx: {} }, resolve); });",
+          "    });",
+          "  });",
+          "};"
+        ];
+      }else if(unitModule && unitModule.indexOf('model') === 0){
+        // TODO: Implement unit test for models
+        // use moduleForModel
+      }else if(unitModule){
+        // TODO: Implement unit test for generic classes
+        // use moduleFor
+      }else{
+        testFeature = [
+          "function testFeature(feature) {",
+          "  module(`Feature: ${feature.title}`, {",
+          "    beforeEach: function() {",
+          "      this.application = startApp();",
+          "    },",
+          "    afterEach: function() {",
+          "      Ember.run(this.application, 'destroy');",
+          "    }",
+          "  });",
+
+          "  feature.scenarios.forEach(function(scenario) {",
+          "    test(`Scenario: ${scenario.title}`, function(assert) {",
+          "      expect(scenario.steps.length);",
+          "      return new Ember.RSVP.Promise(function (resolve) { yadda.Yadda(library.default(assert), this).yadda(scenario.steps, { ctx: {} }, resolve); });",
+          "    });",
+          "  });",
+          "};"
+        ];
+      }
+
   }
   return testFeature.join('\n');
 };
