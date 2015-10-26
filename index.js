@@ -86,7 +86,8 @@ FeatureParser.prototype.getTestFeature = function(unitModule,fileName ) {
         testFeature = [
           "function testFeature(feature) {",
           "  moduleForComponent('"+fileName+"', `Feature: ${feature.title}`,{",
-          "     unit:true",
+          "     unit:true,",
+          "     needs: feature.annotations.needs? feature.annotations.needs.split(',') : [],",
           "});",
 
           "  feature.scenarios.forEach(function(scenario) {",
