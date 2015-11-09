@@ -66,7 +66,7 @@ export default function(assert) {
     .given('it\'s next to apples', function(next) {
       const apples = find('.apple');
       assert.ok(apples.length > 0)
-    }
+    })
     .when('left toghether for a while', function(next) {
       // bananas rot really quickly next to apples.
       setTimeout(function() {
