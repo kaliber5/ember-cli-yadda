@@ -79,7 +79,7 @@ export default function(assert) {
       assert.ok(banana.hasClass('rotten'));
       next();
     });
-});
+};
 ```
 
 ## Inner workings
