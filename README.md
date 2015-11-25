@@ -4,7 +4,7 @@
 
 This ember-cli addon facilitates writing acceptance tests in the Gherkin language and executing them against your Ember app.
 
-[@mschinis (Micheal Schinis)](https://github.com/mschinis) Did held a great talk at @emberlondon [BDD approach with ember using `ember-cli-yadda`](https://vimeo.com/146828818).
+[@mschinis (Micheal Schinis)](https://github.com/mschinis) Did a great talk at @emberlondon [BDD approach with ember using `ember-cli-yadda`](https://vimeo.com/146828818).
 
 ## Installation and usage
 
