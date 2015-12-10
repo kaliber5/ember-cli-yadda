@@ -115,7 +115,55 @@ export default function(assert) {
 ```
 
 ## Important information
-ember-cli-yadda passes the original scope down to each step definition. This means that you have access to the same Ember helpers, like `andThen()` and `find()`, as you did when writting a normal acceptance/unit test in mocha/qunit.
+##### Scope and helpers
+ember-cli-yadda passes the original scope down to each step definition. This means that you have access to the same Ember helpers, like `andThen()` and `find()`, as you did when writing a normal acceptance/unit test in mocha/qunit.
+
+##### Sharing variables between steps
+You can easily share variables between your steps, by either creating a new variable outside your step chain, or by storing the values in `this.ctx` in each step.
+
+For Example:
+```js
+  import steps from './steps';
+
+  // Variable outside step chain
+  let something = '';
+
+  export default function(assert) {
+    return steps(assert)
+      .given('I add something to the context', function(next) {
+        // Assign 'hello' to the variable outside the step chain
+        something = 'hello';
+        // Assign 'there' to a new variable in `this.ctx`
+        this.ctx.something = 'there';
+        assert.ok(true, this.step);
+        next();
+      })
+      .then('it should be there in the next step', function(next) {
+        // Do an assertion to check that 'there' has been passed correctly
+        // to the next step
+        assert.equal(this.ctx.something, 'there', this.step);
+        next();
+      })
+      .then('external variable should be there in the next step', function(next){
+        // Assert that the external variable still holds the information
+        // we set in the first step
+        assert.equal(something,'hello',this.step);
+      });
+  }
+```
+##### Testing components that depend on other components
+If you need to test a component, that depends on other components, you can use the `@needs` gherkin decorator to specify what this component depends on.
+
+For example:
+```gherkin
+  @needs=component:ember-selectize
+  Feature: Component form-select
+
+    Scenario: Check if component renders
+      Given I initialize the component
+      When I render it
+      Then it should be rendered
+```
 
 ## Inner workings
 
