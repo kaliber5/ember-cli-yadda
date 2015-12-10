@@ -113,6 +113,9 @@ export default function(assert) {
     });
 });
 ```
+**NOTE:** If you are creating a unit test, you need to use `<unit type>/<file name>` when using the generator. This allows ember-cli-yadda to automatically find and import the component, where it will run the tests against.
+
+For example, creating a feature file for a component named `form-select`, you would use `ember g feature-unit components/form-select`
 
 ## Important information
 ##### Scope and helpers
