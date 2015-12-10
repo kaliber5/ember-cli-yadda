@@ -2,17 +2,14 @@
 [![Ember Observer Score](http://emberobserver.com/badges/ember-cli-yadda.svg)](http://emberobserver.com/addons/ember-cli-yadda)
 # Ember-cli-yadda
 
-This ember-cli addon facilitates writing acceptance tests in the Gherkin language and executing them against your Ember app.
+This ember-cli addon facilitates writing acceptance and unit tests in the Gherkin language and executing them against your Ember app.
 
-## Installation and usage
+## Installation
 
-You can use ``ember g feature [feature title]`` to generate an feature file and a step definition.
-
-For example:
+Installing ember-cli-yadda is a breeze. All you need to do is run the following command in your project directory.
 
 ```sh
 ember install ember-cli-yadda
-ember g feature make-a-feature
 ```
 
 This adds yadda to your node modules and your bower plugins. It also adds the following files:
@@ -20,11 +17,45 @@ This adds yadda to your node modules and your bower plugins. It also adds the fo
 ```
 /tests/helpers/yadda.js
 /tests/acceptance/steps/steps.js
+/tests/unit/steps/steps.js
+```
+
+running `ember serve` will make the test results available at `http://localhost:4200/tests`
+
+## Usage
+This ember-cli addon provides you with two blueprints with which you can create feature files.
+
+##### Acceptance tests
+If you want to create acceptance tests, you can use ``ember g feature [feature title]`` which generates a feature file for your acceptance tests and a step definition.
+
+For example:
+
+```sh
+ember g feature make-a-feature
+```
+
+This will generate the following files in your project directory:
+
+```
 /tests/acceptance/steps/make-a-feature-steps.js
 /tests/acceptance/make-a-feature.feature
 ```
 
-running `ember serve` will make the test results available at `http://localhost:4200/tests`
+##### Unit tests
+To create a unit test, you can use ``ember g feature-unit [feature title]`` which generates a feature and step definition file where you can write your unit tests.
+
+For example:
+
+```sh
+ember g feature-unit make-a-feature
+```
+
+This will generate the following files in your project directory:
+
+```
+/tests/unit/steps/make-a-feature-steps.js
+/tests/unit/make-a-feature.feature
+```
 
 ## Writing tests
 
@@ -83,8 +114,11 @@ export default function(assert) {
 });
 ```
 
+## Important information
+ember-cli-yadda passes the original scope down to each step definition. This means that you have access to the same Ember helpers, like `andThen()` and `find()`, as you did when writting a normal acceptance/unit test in mocha/qunit.
+
 ## Inner workings
 
 This ember addon registers a preprocessor that parses `.feature` / `.spec` / `.specification` files using [yadda](https://github.com/acuminous/yadda) and generates a `-test.js` file in the acceptance test folder. It also adds a little loader helper ``/tests/helpers/yadda.js`` because yadda does not define an amd module.
 
-The addon also adds a `/tests/acceptance/steps/steps` module you can extend in feature specific step definitions. Any shared step definitions should be moved to this file or included there. Feature specific step definitions reside in ``/tests/acceptance/steps/``. The generated feature test js file imports a ``/tests/acceptance/steps/[feature title]-steps`` module.
+The addon also adds two ES6 modules `/tests/acceptance/steps/steps`, `/tests/unit/steps/steps` you can extend in feature specific step definitions. Any shared step definitions should be moved to these file or included there, depending on the type of test you are running. Feature specific step definitions reside in ``/tests/acceptance/steps/`` and ``/tests/unit/steps``. The generated feature test js files import a ``/tests/[type]/steps/[feature title]-steps`` module, where type can either be `acceptance` or `unit`.
