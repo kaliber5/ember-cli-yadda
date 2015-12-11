@@ -1,7 +1,7 @@
 var yadda = require('yadda');
 var Filter = require('broccoli-filter');
 var path = require('path');
-var inflected = require( 'inflected' );
+var inflected = require('inflected');
 
 /* jshint node: true */
 'use strict';
@@ -55,10 +55,10 @@ FeatureParser.prototype.getTestFrameworkImport = function() {
       return 'import { afterEach, beforeEach, describe, it } from \'mocha\';';
     default: // qunit
       return 'import { moduleFor, moduleForComponent, test } from \'ember-qunit\';\
-              import {module} from \'qunit\';';
+              import { module } from \'qunit\';';
   }
 };
-FeatureParser.prototype.getTestFeature = function(unitModule,fileName ) {
+FeatureParser.prototype.getTestFeature = function(unitModule,fileName) {
   var testFeature;
   switch (this.testFramework) {
     case 'mocha':
@@ -82,10 +82,10 @@ FeatureParser.prototype.getTestFeature = function(unitModule,fileName ) {
       ];
       break;
     default: // qunit
-      if(unitModule && unitModule.indexOf('component') === 0){
+      if(unitModule && unitModule.indexOf('component') === 0) {
         testFeature = [
           "function testFeature(feature) {",
-          "  moduleForComponent('"+fileName+"', `Feature: ${feature.title}`,{",
+          "  moduleForComponent('"+fileName+"', `Feature: ${feature.title}`, {",
           "     unit:true,",
           "     needs: feature.annotations.needs? feature.annotations.needs.split(',') : [],",
           "});",
@@ -99,13 +99,13 @@ FeatureParser.prototype.getTestFeature = function(unitModule,fileName ) {
           "  });",
           "};"
         ];
-      }else if(unitModule && unitModule.indexOf('model') === 0){
+      } else if(unitModule && unitModule.indexOf('model') === 0) {
         // TODO: Implement unit test for models
         // use moduleForModel
-      }else if(unitModule){
+      } else if(unitModule) {
         // TODO: Implement unit test for generic classes
         // use moduleFor
-      }else{
+      } else {
         testFeature = [
           "function testFeature(feature) {",
           "  module(`Feature: ${feature.title}`, {",
@@ -126,7 +126,6 @@ FeatureParser.prototype.getTestFeature = function(unitModule,fileName ) {
           "};"
         ];
       }
-
   }
   return testFeature.join('\n');
 };
