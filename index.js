@@ -155,7 +155,11 @@ module.exports = {
   },
   included: function(app) {
     this._super.included(app);
-    app.import(app.bowerDirectory + '/yadda/dist/yadda-0.15.4.js', { type: 'test' });
+
+    var options = app.options['ember-cli-yadda'] || {};
+    var yaddaVersion = options.yaddaVersion || '0.17.6';
+
+    app.import(app.bowerDirectory + '/yadda/dist/yadda-' + yaddaVersion + '.js', { type: 'test' });
   },
   isDevelopingAddon: function() {
    return true;

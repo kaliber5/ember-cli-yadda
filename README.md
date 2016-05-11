@@ -23,6 +23,22 @@ This adds yadda to your node modules and your bower plugins. It also adds the fo
 
 running `ember serve` will make the test results available at `http://localhost:4200/tests`
 
+##### Specifying the yadda version
+
+After installation the addon will have added the most recent yadda version to your bower dependencies. As it comes with
+all yadda releases in its dist folder, you can specify which yadda version to include in your ember-cli build:
+
+```js
+// ember-cli-build.js
+
+    var app = new EmberApp({
+        'ember-cli-yadda': {
+            'yaddaVersion': '0.17.6'
+        }
+    });
+
+```
+
 ## Usage
 This ember-cli addon provides you with two blueprints with which you can create feature files.
 
