@@ -53,7 +53,7 @@ FeatureParser.prototype.getDestFilePath = function (relativePath) {
 FeatureParser.prototype.getTestFrameworkImport = function() {
   switch (this.testFramework) {
     case 'mocha':
-      return 'import { afterEach, beforeEach, describe, it } from \'mocha\';';
+      return 'import { after, before, describe, it } from \'mocha\';';
     default: // qunit
       return 'import { moduleFor, moduleForComponent, test } from \'ember-qunit\';\
               import { module } from \'qunit\';';
@@ -66,17 +66,31 @@ FeatureParser.prototype.getTestFeature = function(unitModule,fileName) {
       testFeature = [
         "function testFeature(feature) {",
         "  describe(`Feature: ${feature.title}`, () => {",
-        "    beforeEach(function() {",
-        "      this.application = startApp();",
-        "    });",
-        "    afterEach(function() {",
-        "      destroyApp(this.application);",
-        "    });",
-        "    ",
         "    feature.scenarios.forEach(function(scenario) {",
-        "      it(`Scenario: ${scenario.title}`, function() {",
-        "        let self = this;",
-        "        return new Ember.RSVP.Promise(function(resolve) { yadda.Yadda(library.default(), self).yadda(scenario.steps, { ctx: {} }, resolve); });",
+        "      describe(`Scenario: ${scenario.title}`, function() {",
+        "        before(function() {",
+        "          this.application = startApp();",
+        "        });",
+        "        after(function() {",
+        "          destroyApp(this.application);",
+        "        });",
+        "        let context = { ctx: {} };",
+        "        let failed = false;",
+        "        scenario.steps.forEach(function(step) {",
+        "          it(step, function() {",
+        "            if (failed === true) {",
+        "              this.test.pending = true;",
+        "              this.skip();",
+        "            } else {",
+        "              let self = this;",
+        "              let promise = new Ember.RSVP.Promise(function(resolve) { yadda.Yadda(library.default(), self).yadda(step, context, resolve); });",
+        "              promise.catch(function() {",
+        "                failed = true;",
+        "              });",
+        "              return promise;",
+        "            }",
+        "          });",
+        "        });",
         "      });",
         "    });",
         "  });",
