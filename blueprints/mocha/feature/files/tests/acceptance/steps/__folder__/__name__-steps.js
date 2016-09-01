@@ -5,7 +5,7 @@ import steps from '<%= foldersUp %>steps';
 
 export default function() {
   return steps()
-    .then('I should find a file', (next) => {
+    .then('I should find a file', function(next) {
       // Add your own assert library
       next();
     });
