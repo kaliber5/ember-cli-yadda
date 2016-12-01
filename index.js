@@ -55,7 +55,7 @@ FeatureParser.prototype.getTestFrameworkImport = function() {
     case 'mocha':
       return 'import { afterEach, beforeEach, describe, it } from \'mocha\';';
     default: // qunit
-      return 'import { moduleFor, moduleForComponent, test } from \'ember-qunit\';\
+      return 'import { moduleFor, moduleForComponent, test, skip } from \'ember-qunit\';\
               import { module } from \'qunit\';';
   }
 };
@@ -109,6 +109,10 @@ FeatureParser.prototype.getTestFeature = function(unitModule,fileName) {
       } else {
         testFeature = [
           "function testFeature(feature) {",
+          "  if(feature.annotations.pending) {",
+          "    skip(`Feature: ${feature.title}`, function(assert) { });",
+          "    return;",
+          "  }",
           "  module(`Feature: ${feature.title}`, {",
           "    beforeEach: function() {",
           "      this.application = startApp();",
@@ -119,6 +123,10 @@ FeatureParser.prototype.getTestFeature = function(unitModule,fileName) {
           "  });",
 
           "  feature.scenarios.forEach(function(scenario) {",
+          "    if(scenario.annotations.pending) {",
+          "      skip(`Scenario: ${scenario.title}`, function(assert) { });",
+          "      return;",
+          "    }",
           "    test(`Scenario: ${scenario.title}`, function(assert) {",
           "      return new Ember.RSVP.Promise(function (resolve) { yadda.Yadda(library.default(assert), this).yadda(scenario.steps, { ctx: {} }, resolve); });",
           "    });",
