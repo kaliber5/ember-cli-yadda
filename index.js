@@ -109,7 +109,7 @@ FeatureParser.prototype.getTestFeature = function(unitModule,fileName) {
       } else {
         testFeature = [
           "function testFeature(feature) {",
-          "  if(feature.annotations.pending) {",
+          "  if(feature.annotations.ignore) {",
           "    skip(`Feature: ${feature.title}`, function(assert) { });",
           "    return;",
           "  }",
@@ -123,7 +123,7 @@ FeatureParser.prototype.getTestFeature = function(unitModule,fileName) {
           "  });",
 
           "  feature.scenarios.forEach(function(scenario) {",
-          "    if(scenario.annotations.pending) {",
+          "    if(scenario.annotations.ignore) {",
           "      skip(`Scenario: ${scenario.title}`, function(assert) { });",
           "      return;",
           "    }",
