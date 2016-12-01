@@ -14,19 +14,22 @@ Installing ember-cli-yadda is a breeze. All you need to do is run the following 
 ember install ember-cli-yadda
 ```
 
-This adds yadda to your node modules and your bower plugins. It also adds the following files:
+##### Versions >= 0.2.0
+
+This adds the latest version of yadda to your node modules, along with [ember-browserify](https://www.npmjs.com/package/ember-browserify) (to allow yadda to run in the browser). It also adds the following files:
 
 ```
 /tests/acceptance/steps/steps.js
 /tests/unit/steps/steps.js
 ```
 
-running `ember serve` will make the test results available at `http://localhost:4200/tests`
+You may specify the version of yadda by changing it in package.json and running `npm install`.
 
-##### Specifying the yadda version
+##### Versions <= 0.1.0
 
-After installation the addon will have added the most recent yadda version to your bower dependencies. As it comes with
-all yadda releases in its dist folder, you can specify which yadda version to include in your ember-cli build:
+ember-browserify is not used.  Instead, yadda is also added to your bower dependencies.  The files listed above are also added.
+
+After installation the addon will have added the most recent yadda version to your bower dependencies. As it comes with all yadda releases in its dist folder, you can specify which yadda version to include in your ember-cli build:
 
 ```js
 // ember-cli-build.js
@@ -38,6 +41,17 @@ all yadda releases in its dist folder, you can specify which yadda version to in
     });
 
 ```
+
+Running `ember serve` will make the test results available at `http://localhost:4200/tests`.
+
+##### Upgrading from <= 0.1.0 to >= 0.2.0
+1. Un-install yadda from your bower dependencies: `bower uninstall yadda --save`.
+2. Install ember-cli-yadda: `ember install ember-cli-yadda`.
+3. If a specific version of yadda is being used:
+    * Remove the code from ember-cli-build.js that specifies the version.
+    * Un-install the latest version of yadda from npm: `npm uninstall yadda --save-dev`.
+    * Install the desired version of yadda: `npm install yadda@<desired version> --save-dev`.
+
 
 ## Usage
 This ember-cli addon provides you with two blueprints with which you can create feature files.
