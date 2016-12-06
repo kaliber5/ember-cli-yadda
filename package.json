@@ -32,13 +32,13 @@
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-export-application-global": "^1.0.4",
     "ember-suave": "1.2.3 ",
-    "ember-try": "~0.0.8",
-    "yadda": "^0.22.1"
+    "ember-try": "~0.0.8"
   },
   "dependencies": {
     "broccoli-filter": "^1.2.2",
     "ember-cli-babel": "^5.1.5",
-    "inflected": "^1.1.6"
+    "inflected": "^1.1.6",
+    "yadda": "*"
   },
   "keywords": [
     "ember-addon",

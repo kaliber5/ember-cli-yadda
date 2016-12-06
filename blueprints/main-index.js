@@ -4,9 +4,6 @@ module.exports = {
   normalizeEntityName: function() {
   },
   afterInstall: function() {
-    return this.addPackageToProject('yadda')
-    .then(()=> {
-      return this.addAddonToProject('ember-browserify');
-    });
+    this.addAddonToProject('ember-browserify');
   }
 };
