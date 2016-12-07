@@ -11,11 +11,11 @@ module.exports = {
       folder: options.args[1].split('/').slice(0, -1).join('/').replace(/\s/g, '-') + '/',
       // relative path to go back up to the tests/acceptance/steps folder
       foldersUp: (function () {
-        var path = options.args[1].split('/').slice(0, -1).join('/')
+        var path = options.args[1].split('/').slice(0, -1).join('/');
         if (path === '') {
           return './';
         }
-        return (path + '/').replace(/.+?\//g, '../')
+        return (path + '/').replace(/.+?\//g, '../');
       }())
     };
   },
@@ -31,6 +31,6 @@ module.exports = {
       __folder__: function(options) {
         return options.locals.folder;
       }
-    }
+    };
   }
 };
