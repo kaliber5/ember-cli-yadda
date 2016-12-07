@@ -163,6 +163,8 @@ export default function(assert) {
 
 For example, creating a feature file for a component named `form-select`, you would use `ember g feature-unit components/form-select`
 
+You can skip tests by adding the `@ignore` annotation above the Scenario or Feature. 
+
 ## Important information
 ##### Scope and helpers
 ember-cli-yadda passes the original scope down to each step definition. This means that you have access to the same Ember helpers, like `andThen()` and `find()`, as you did when writing a normal acceptance/unit test in mocha/qunit.
