@@ -52,6 +52,25 @@ Running `ember serve` will make the test results available at `http://localhost:
     * Un-install the latest version of yadda from npm: `npm uninstall yadda --save-dev`.
     * Install the desired version of yadda: `npm install yadda@<desired version> --save-dev`.
 
+## Configuration
+You can set custom yadda configuration. It should be set in your project's config/environment.js file into `ENV.APP.yadda` property. For example, to get support for French gherkin syntax, you should have:
+```js
+// ...
+if (environment === 'test') {
+  // ...
+  ENV.APP.yadda = {
+    language: 'French'
+  };
+}
+// ...
+```
+
+##### Config options
+* `language` - (default: "English") The full list of supported languages is available on [yadda repository](https://github.com/acuminous/yadda/tree/master/lib/localisation)
+*note: keep in mind that case sensitivity is important for language settings*
+* `leftPlaceholderChar` - (default: "[")
+* `rightPlaceholderChar` - (default: "]")
+*note: placeholder characters are use for example in Scenario Outlines*
 
 ## Usage
 This ember-cli addon provides you with two blueprints with which you can create feature files.
@@ -72,19 +91,19 @@ This will generate the following files in your project directory:
 /tests/acceptance/make-a-feature.feature
 ```
 
-When using Mocha as your test framework, you have the option to run each scenario's step as a separate test, with all steps grouped within a Mocha `describe` block. If a step is failing, all following steps of that scenario will then be marked as pending. This way you get a much clearer picture on where (which step) a possible failure is happening. To opt in into that mode, use the `separateSteps` config option. 
- 
+When using Mocha as your test framework, you have the option to run each scenario's step as a separate test, with all steps grouped within a Mocha `describe` block. If a step is failing, all following steps of that scenario will then be marked as pending. This way you get a much clearer picture on where (which step) a possible failure is happening. To opt in into that mode, use the `separateSteps` config option.
+
  ```js
  // ember-cli-build.js
- 
+
      var app = new EmberApp({
          'ember-cli-yadda': {
              'separateSteps': true
          }
      });
- 
+
  ```
- 
+
  *Note that this mode is currently not available when you are using QUnit as your test framework!*
 
 ##### Unit tests
@@ -163,7 +182,7 @@ export default function(assert) {
 
 For example, creating a feature file for a component named `form-select`, you would use `ember g feature-unit components/form-select`
 
-You can skip tests by adding the `@ignore` annotation above the Scenario or Feature. 
+You can skip tests by adding the `@ignore` annotation above the Scenario or Feature.
 
 ## Important information
 ##### Scope and helpers
