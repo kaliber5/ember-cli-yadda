@@ -20,7 +20,10 @@ module.exports = {
     var env = 'test';
     var yaddaConfig = this.config(env).yadda || {};
     var appYaddaConfig = this.project.config(env).APP.yadda || {};
-    yaddaConfig = Object.assign(yaddaConfig, appYaddaConfig);
+    for(var key in appYaddaConfig) {
+      if(!appYaddaConfig.hasOwnProperty(key)) continue;
+      yaddaConfig[key] = appYaddaConfig[key];
+    }
 
     registry.add('js', {
       name: 'ember-cli-yadda',
