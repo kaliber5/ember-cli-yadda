@@ -66,11 +66,9 @@ if (environment === 'test') {
 ```
 
 ##### Config options
-* `language` - (default: "English") The full list of supported languages is available on [yadda repository](https://github.com/acuminous/yadda/tree/master/lib/localisation)
-*note: keep in mind that case sensitivity is important for language settings*
-* `leftPlaceholderChar` - (default: "[")
-* `rightPlaceholderChar` - (default: "]")
-*note: placeholder characters are use for example in Scenario Outlines*
+* `language` - (default: "English") The full list of supported languages is available on [yadda repository](https://github.com/acuminous/yadda/tree/master/lib/localisation) *note: keep in mind that case sensitivity is important for language settings*
+* `leftPlaceholderChar` - (default: "[") *used for example in Scenario Outlines*
+* `rightPlaceholderChar` - (default: "]") *used for example in Scenario Outlines*
 
 ## Usage
 This ember-cli addon provides you with two blueprints with which you can create feature files.
