@@ -5,6 +5,10 @@ var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 module.exports = function(defaults) {
   var app = new EmberAddon(defaults, {
     // Add options here
+    'ember-cli-yadda': {
+      // relative to tests directory, must start with /
+      'runTestHelper': '/helpers/yadda-run-test-helper'
+    }
   });
 
   /*

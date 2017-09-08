@@ -37,6 +37,12 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
+
+    // these are read by tests/helpers/yadda-run-test-helper.js
+    ENV['annotations'] = {
+      all: true,
+      smoke: true
+    };
   }
 
   if (environment === 'production') {
