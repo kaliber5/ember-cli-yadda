@@ -30,6 +30,10 @@ module.exports = {
   },
   included: function(app) {
     this._super.included(app);
-    this.options = app.options['ember-cli-yadda'] || {};
+    var options = app.options['ember-cli-yadda'] || {};
+    if (typeof options.persist === 'undefined') {
+      options.persist = true;
+    }
+    this.options = options;
   }
 };
