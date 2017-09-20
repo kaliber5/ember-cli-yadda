@@ -35,7 +35,7 @@
     "ember-try": "~0.0.8"
   },
   "dependencies": {
-    "broccoli-filter": "^1.2.2",
+    "broccoli-persistent-filter": "^1.4.3",
     "ember-cli-babel": "^5.1.5",
     "inflected": "^1.1.6",
     "yadda": "*"
