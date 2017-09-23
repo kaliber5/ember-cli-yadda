@@ -1,8 +1,9 @@
-@smoke
-Feature: feature not run
+@notRun
+Feature: does not run
 
-  Scenario: this does not run
+  Scenario: does not run
 
-    Given this feature will not be run
+    Given this scenario has annotation @notRun
+    And the config does not specify the @notRun annotation
     When I look at the test results
     Then the assert in the given step should not be shown as a failure

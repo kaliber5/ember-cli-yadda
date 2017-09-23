@@ -38,11 +38,12 @@ module.exports = function(environment) {
 
     ENV.APP.rootElement = '#ember-testing';
 
-    // these are read by tests/helpers/yadda-run-test-helper.js
-    ENV['annotations'] = {
-      all: true,
-      smoke: true
-    };
+    // these are read by tests/helpers/yadda-annotations.js
+    // when ENV.annotations is not set, the test should run as the used to
+    // only feature/scenarios that have @acceptance will run
+    // ENV['annotations'] = ['acceptance'];
+    // only feature/scenarios that have either @acceptance or @smoke will run
+    // ENV['annotations'] = ['acceptance','smoke'];
   }
 
   if (environment === 'production') {

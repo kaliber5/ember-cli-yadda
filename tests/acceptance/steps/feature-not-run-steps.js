@@ -5,7 +5,11 @@ import steps from './steps';
 
 export default function(assert) {
   return steps(assert)
-    .given('this feature will not be run', function(next) {
+    .given('this scenario has annotation @notRun', function(next) {
+      assert.ok(false, this.step);
+      next();
+    })
+    .given('the config does not specify the @notRun annotation', function(next) {
       assert.ok(false, this.step);
       next();
     })
