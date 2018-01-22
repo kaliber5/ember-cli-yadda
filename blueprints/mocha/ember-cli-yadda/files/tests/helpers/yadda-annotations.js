@@ -1,5 +1,6 @@
 import ENV from '../../config/environment';
 import { describe } from 'mocha';
+import Ember from 'ember';
 
 // this logic could be anything, but in this case...
 // if @ignore, then return skip (for backwards compatibility)
@@ -44,7 +45,8 @@ function ignoreIt(testElement) {
 }
 
 function logIt(testElement) {
-  console.log(`Not running or skipping: "${testElement.title}"`);
+  // change this to do what you need it to do
+  Ember.Logger.info(`Not running or skipping: "${testElement.title}"`);
 }
 
 // exported functions
