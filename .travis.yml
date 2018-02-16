@@ -11,6 +11,8 @@ cache:
 
 env:
   - EMBER_TRY_SCENARIO=default
+  - EMBER_TRY_SCENARIO=default ANNOTATIONS=acceptance
+  - EMBER_TRY_SCENARIO=default ANNOTATIONS=acceptance,smoke
   - EMBER_TRY_SCENARIO=ember-release
   - EMBER_TRY_SCENARIO=ember-beta
   - EMBER_TRY_SCENARIO=ember-canary
