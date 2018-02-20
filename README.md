@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/curit/ember-cli-yadda.svg)](https://travis-ci.org/curit/ember-cli-yadda)
+[![Build Status](https://travis-ci.org/albertjan/ember-cli-yadda.svg)](https://travis-ci.org/curit/ember-cli-yadda)
 [![Ember Observer Score](http://emberobserver.com/badges/ember-cli-yadda.svg)](http://emberobserver.com/addons/ember-cli-yadda)
 # Ember-cli-yadda
 
