@@ -41,8 +41,7 @@ module.exports = function(environment) {
 
     ENV.APP.rootElement = '#ember-testing';
 
-    // Enable this when switching to new testing API!
-    // ENV.APP.autoboot = false;
+    ENV.APP.autoboot = false;
 
     // these are read by tests/helpers/yadda-annotations.js
     // when ENV.annotations is not set, the test should run as it used to

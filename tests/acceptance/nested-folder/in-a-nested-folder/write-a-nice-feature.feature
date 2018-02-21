@@ -1,3 +1,4 @@
+@application
 Feature: write a nice feature
 
   Scenario: the one where I type ember g feature

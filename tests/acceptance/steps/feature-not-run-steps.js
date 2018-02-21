@@ -5,20 +5,16 @@ import steps from './steps';
 
 export default function(assert) {
   return steps(assert)
-    .given('this scenario has annotation @notRun', function(next) {
+    .given('this scenario has annotation @notRun', function() {
       assert.ok(false, this.step);
-      next();
     })
-    .given('the config does not specify the @notRun annotation', function(next) {
+    .given('the config does not specify the @notRun annotation', function() {
       assert.ok(false, this.step);
-      next();
     })
-    .when('I look at the test results', function(next) {
+    .when('I look at the test results', function() {
       assert.ok(false, this.step);
-      next();
     })
-    .then('the assert in the given step should not be shown as a failure', function(next) {
+    .then('the assert in the given step should not be shown as a failure', function() {
       assert.ok(false, this.step);
-      next();
     });
 }

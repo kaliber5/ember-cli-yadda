@@ -1,5 +1,6 @@
 Feature: top level
 
+  @application
   Scenario: the one where I type ember g feature
 
     Given I type "Ember g feature make-feature"

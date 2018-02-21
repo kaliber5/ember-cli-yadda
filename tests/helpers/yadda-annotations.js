@@ -58,11 +58,15 @@ function runScenario(featureAnnotations, scenarioAnnotations) {
 }
 
 function setupFeature(featureAnnotations) {
-  return setupApplicationTest;
+  if (featureAnnotations.application) {
+    return setupApplicationTest;
+  }
 }
 
 function setupScenario(featureAnnotations, scenarioAnnotations) {
-
+  if (scenarioAnnotations.application) {
+    return setupApplicationTest;
+  }
 }
 
 export {

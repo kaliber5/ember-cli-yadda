@@ -5,13 +5,11 @@ import steps from './steps';
 
 export default function(assert) {
   return steps(assert)
-    .given('I add something to the context', function(next) {
+    .given('I add something to the context', function() {
       this.ctx.something = 'there';
       assert.ok(true, this.step);
-      next();
     })
-    .then('it should be there in the next step', function(next) {
+    .then('it should be there in the next step', function() {
       assert.equal(this.ctx.something, 'there', this.step);
-      next();
     });
 }

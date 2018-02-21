@@ -5,28 +5,22 @@ import steps from './steps';
 
 export default function(assert) {
   return steps(assert)
-  .given('this scenario will not be run', function(next) {
+  .given('this scenario will not be run', function() {
     assert.ok(false, this.step);
-    next();
   })
-  .given('this scenario has annotation @acceptance', function(next) {
+  .given('this scenario has annotation @acceptance', function() {
     assert.ok(true, this.step);
-    next();
   })
-  .given('the config specifies the @acceptance annotation', function(next) {
+  .given('the config specifies the @acceptance annotation', function() {
     assert.ok(true, this.step);
-    next();
   })
-  .when('I look at the test results', function(next) {
+  .when('I look at the test results', function() {
     assert.ok(true, this.step);
-    next();
   })
-  .then('the assert in the given step should not be shown as a failure', function(next) {
+  .then('the assert in the given step should not be shown as a failure', function() {
     assert.ok(false, this.step);
-    next();
   })
-  .then('the assert in the given step should be shown as a success', function(next) {
+  .then('the assert in the given step should be shown as a success', function() {
     assert.ok(true, this.step);
-    next();
   });
 }
