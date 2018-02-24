@@ -1,4 +1,3 @@
-/* jshint node: true */
 'use strict';
 
 var path = require('path');
@@ -20,7 +19,7 @@ module.exports = {
     registry.add('js', {
       name: 'ember-cli-yadda',
       ext: ['feature', 'spec', 'specification'],
-      toTree: function(tree, inputPath, outputPath) {
+      toTree: function(tree) {
         return new FeatureParser(tree, testFramework, self.options);
       }
     });

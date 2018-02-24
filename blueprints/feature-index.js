@@ -26,7 +26,7 @@ module.exports = {
     return name.split('/').pop().replace(/\s/g, '-');
   },
 
-  fileMapTokens: function(options) {
+  fileMapTokens: function() {
     return {
       __folder__: function(options) {
         return options.locals.folder;
