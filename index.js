@@ -17,11 +17,19 @@ module.exports = {
   setupPreprocessorRegistry: function(type, registry) {
     var testFramework = this.getTestFramework();
     var self = this;
+    var env = 'test';
+    var yaddaConfig = this.config(env).yadda || {};
+    var appYaddaConfig = this.project.config(env).APP.yadda || {};
+    for(var key in appYaddaConfig) {
+      if(!appYaddaConfig.hasOwnProperty(key)) continue;
+      yaddaConfig[key] = appYaddaConfig[key];
+    }
+
     registry.add('js', {
       name: 'ember-cli-yadda',
       ext: ['feature', 'spec', 'specification'],
       toTree: function(tree, inputPath, outputPath) {
-        return new FeatureParser(tree, testFramework, self.options);
+        return new FeatureParser(tree, testFramework, self.options, yaddaConfig);
       }
     });
   },
