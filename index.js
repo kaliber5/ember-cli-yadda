@@ -20,7 +20,7 @@ module.exports = {
       name: 'ember-cli-yadda',
       ext: ['feature', 'spec', 'specification'],
       toTree(tree) {
-        return new FeatureParser(tree, testFramework, self.options);
+        return new FeatureParser(tree, testFramework, self._options);
       }
     });
   },
@@ -33,6 +33,6 @@ module.exports = {
     if (typeof options.persist === 'undefined') {
       options.persist = true;
     }
-    this.options = options;
+    this._options = options;
   }
 };
