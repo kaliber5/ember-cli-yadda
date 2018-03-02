@@ -6,8 +6,8 @@ const FeatureParser = require('./lib/feature-parser');
 module.exports = {
   name: 'ember-cli-yadda',
   getTestFramework() {
-    let packages = Object.keys(this.project.addonPackages);
-    if (packages.indexOf('ember-cli-mocha') > -1) {
+    let dependencies = this.project.dependencies();
+    if ('ember-cli-mocha' in dependencies || 'ember-mocha' in dependencies) {
       return 'mocha';
     } else {
       return 'qunit';

@@ -45,6 +45,8 @@ function runScenario(featureAnnotations, scenarioAnnotations) {
   return checkAnnotations(scenarioAnnotations);
 }
 
+// setup tests
+// you can override these function to add additional setup setups, or handle new setup related annotations
 function setupFeature(featureAnnotations) {
   return setupYaddaTest(featureAnnotations);
 }
