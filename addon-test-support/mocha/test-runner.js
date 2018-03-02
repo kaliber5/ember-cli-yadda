@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { describe, it } from 'mocha';
 import { Promise as EmberPromise } from 'rsvp';
 
 // eslint-disable-next-line no-unused-vars
@@ -9,11 +9,11 @@ export default function testFeature(feature, yadda, yaddaAnnotations, library) {
     featureAction.call(this, feature);
   } else {
 
-    module(`Feature: ${feature.title}`, function(featureHooks) {
+    describe(`Feature: ${feature.title}`, function()  {
 
       let setupFeature = typeof yaddaAnnotations.setupFeature === 'function' ? yaddaAnnotations.setupFeature(feature.annotations) : undefined;
       if (typeof setupFeature === 'function') {
-        setupFeature.call(this, featureHooks);
+        setupFeature.call(this);
       }
 
       feature.scenarios.forEach(function(scenario) {
@@ -21,8 +21,8 @@ export default function testFeature(feature, yadda, yaddaAnnotations, library) {
         let setupScenario = typeof yaddaAnnotations.setupScenario === 'function' ? yaddaAnnotations.setupScenario(feature.annotations, scenario.annotations) : undefined;
         if (typeof setupScenario === 'function') {
           // if feature has custom setup, wrap it in another module to use its own beforeEach/afterEach hooks
-          module(`Scenario: ${scenario.title}`, function(scenarioHooks) {
-            setupScenario.call(this, scenarioHooks);
+          describe(`Scenario: ${scenario.title}`, function() {
+            setupScenario.call(this);
             testScenario(scenario, feature, yadda, yaddaAnnotations, library);
           });
         } else {
@@ -38,10 +38,10 @@ function testScenario(scenario, feature, yadda, yaddaAnnotations, library) {
   if (typeof scenarioAction === 'function') {
     scenarioAction.call(this, scenario);
   } else {
-    test(`Scenario: ${scenario.title}`, function(assert) {
+    it(`Scenario: ${scenario.title}`, function() {
       let self = this;
       return new EmberPromise(function(resolve) {
-        yadda.Yadda(library.default(assert), self).yadda(scenario.steps, { ctx: {} }, function next(err, result) {
+        yadda.Yadda(library.default(), self).yadda(scenario.steps, { ctx: {} }, function next(err, result) {
           if (err) {
             throw err;
           }
