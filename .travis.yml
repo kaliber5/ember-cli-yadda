@@ -1,18 +1,27 @@
 ---
 language: node_js
 node_js:
-  - "6"
+  # we recommend testing addons with the same minimum supported node version as Ember CLI
+  # so that your addon works for all apps
+  - "4"
 
 sudo: false
+dist: trusty
+
+addons:
+  chrome: stable
 
 cache:
   directories:
-    - node_modules
+    - $HOME/.npm
 
 env:
-  - EMBER_TRY_SCENARIO=default
-  - EMBER_TRY_SCENARIO=default ANNOTATIONS=acceptance
-  - EMBER_TRY_SCENARIO=default ANNOTATIONS=acceptance,smoke
+  - EMBER_TRY_SCENARIO=ember-lts-2.12
+  - EMBER_TRY_SCENARIO=ember-lts-2.16
+  - EMBER_TRY_SCENARIO=ember-lts-2.18
+  - EMBER_TRY_SCENARIO=ember-default
+  - EMBER_TRY_SCENARIO=ember-default ANNOTATIONS=acceptance
+  - EMBER_TRY_SCENARIO=ember-default ANNOTATIONS=acceptance,smoke
   - EMBER_TRY_SCENARIO=ember-release
   - EMBER_TRY_SCENARIO=ember-release ANNOTATIONS=acceptance
   - EMBER_TRY_SCENARIO=ember-release ANNOTATIONS=acceptance,smoke
@@ -22,18 +31,15 @@ env:
 matrix:
   fast_finish: true
   allow_failures:
-    - env: EMBER_TRY_SCENARIO=ember-beta
     - env: EMBER_TRY_SCENARIO=ember-canary
 
 before_install:
-  - export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH
-  - "npm config set spin false"
-  - "npm install -g npm@^2"
-
-install:
-  - npm install -g bower
-  - npm install
-  - bower install
+  - npm config set spin false
+  - npm install -g npm@4
+  - npm --version
 
 script:
-  - ember try $EMBER_TRY_SCENARIO test
+  - npm run lint:js
+  # Usually, it's ok to finish the test scenario without reverting
+  #  to the addon's original dependency state, skipping "cleanup".
+  - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO --skip-cleanup

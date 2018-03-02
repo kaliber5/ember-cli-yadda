@@ -1,6 +1,5 @@
 import ENV from '../../config/environment';
 import { skip } from 'ember-qunit';
-import Ember from 'ember';
 
 // this logic could be anything, but in this case...
 // if @ignore, then return skip (for backwards compatibility)
@@ -41,11 +40,11 @@ function checkAnnotations(annotations) {
 
 // call back functions
 function ignoreIt(testElement) {
-  skip(`${testElement.title}`, function(assert) {});
+  skip(`${testElement.title}`, function(/*assert*/) {});
 }
 
 function logIt(testElement) {
-  Ember.Logger.info(`Not running or skipping: "${testElement.title}"`);
+  console.info(`Not running or skipping: "${testElement.title}"`); // eslint-disable-line no-console
 }
 
 // exported functions
