@@ -1,10 +1,9 @@
 import ENV from '../../config/environment';
 import { skip } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import { setupApplicationTest, setupRenderingTest, setupTest } from 'ember-qunit';
 
 // this logic could be anything, but in this case...
 // if @ignore, then return skip (for backwards compatibility)
-// if no annotations are set in the config, run everything without an annotation (for backwards compatibility)
 // if have annotations in config, then only run those that have a matching annotation
 function checkAnnotations(annotations) {
 
@@ -25,17 +24,6 @@ function checkAnnotations(annotations) {
 
     // no match, so don't run it
     return logIt;
-
-  } else {
-    // no annotations set, so run it for backwards compatibility
-    // unless it has annotations, then don't run it
-    if (Object.keys(annotations).length) {
-      // has annotation, so don't run it
-      return logIt;
-    } else {
-      // no annotations, so test it
-      return 'testIt';  // return something other than a function
-    }
   }
 }
 
@@ -58,14 +46,26 @@ function runScenario(featureAnnotations, scenarioAnnotations) {
 }
 
 function setupFeature(featureAnnotations) {
-  if (featureAnnotations.application) {
-    return setupApplicationTest;
-  }
+  return setupYaddaTest(featureAnnotations);
 }
 
 function setupScenario(featureAnnotations, scenarioAnnotations) {
-  if (scenarioAnnotations.application) {
+  let setupFn = setupYaddaTest(scenarioAnnotations);
+  if (setupFn && (featureAnnotations.application || featureAnnotations.rendering || featureAnnotations.context)) {
+    throw new Error('You must not assign any @application, @rendering or @context annotations to a scenario as well as its feature!');
+  }
+  return setupFn;
+}
+
+function setupYaddaTest(annotations) {
+  if (annotations.application) {
     return setupApplicationTest;
+  }
+  if (annotations.rendering) {
+    return setupRenderingTest;
+  }
+  if (annotations.context) {
+    return setupTest;
   }
 }
 
