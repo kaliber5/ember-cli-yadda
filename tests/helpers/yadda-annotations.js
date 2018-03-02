@@ -1,5 +1,6 @@
 import ENV from '../../config/environment';
-import { skip } from 'ember-qunit';
+import { skip } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 
 // this logic could be anything, but in this case...
 // if @ignore, then return skip (for backwards compatibility)
@@ -56,4 +57,17 @@ function runScenario(featureAnnotations, scenarioAnnotations) {
   return checkAnnotations(scenarioAnnotations);
 }
 
-export { runFeature, runScenario };
+function setupFeature(featureAnnotations) {
+  return setupApplicationTest;
+}
+
+function setupScenario(featureAnnotations, scenarioAnnotations) {
+
+}
+
+export {
+  runFeature,
+  runScenario,
+  setupFeature,
+  setupScenario
+};
