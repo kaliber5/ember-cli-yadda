@@ -1,9 +1,11 @@
+'use strict';
+
 module.exports = {
   name: 'ember-cli-yadda',
   description: 'ember-cli-yadda',
-  normalizeEntityName: function() {
+  normalizeEntityName() {
   },
-  afterInstall: function() {
+  afterInstall() {
     return this.addAddonToProject('ember-browserify');
   }
 };

@@ -1,35 +1,35 @@
 'use strict';
 
-var path = require('path');
-var FeatureParser = require('./lib/feature-parser');
+const path = require('path');
+const FeatureParser = require('./lib/feature-parser');
 
 module.exports = {
   name: 'ember-cli-yadda',
-  getTestFramework: function() {
-    var packages = Object.keys(this.project.addonPackages);
+  getTestFramework() {
+    let packages = Object.keys(this.project.addonPackages);
     if (packages.indexOf('ember-cli-mocha') > -1) {
       return 'mocha';
     } else {
       return 'qunit';
     }
   },
-  setupPreprocessorRegistry: function(type, registry) {
-    var testFramework = this.getTestFramework();
-    var self = this;
+  setupPreprocessorRegistry(type, registry) {
+    let testFramework = this.getTestFramework();
+    let self = this;
     registry.add('js', {
       name: 'ember-cli-yadda',
       ext: ['feature', 'spec', 'specification'],
-      toTree: function(tree) {
+      toTree(tree) {
         return new FeatureParser(tree, testFramework, self.options);
       }
     });
   },
-  blueprintsPath: function() {
+  blueprintsPath() {
     return path.join(__dirname, 'blueprints', this.getTestFramework());
   },
-  included: function(app) {
+  included(app) {
     this._super.included(app);
-    var options = app.options['ember-cli-yadda'] || {};
+    let options = app.options['ember-cli-yadda'] || {};
     if (typeof options.persist === 'undefined') {
       options.persist = true;
     }
