@@ -1,12 +1,11 @@
-import steps from '<%= foldersUp %>steps';
+import steps from './steps';
 
 // step definitions that are shared between features should be moved to the
-// tests/unit/steps/steps.js file
+// tests/acceptance/steps/steps.js file
 
 export default function(assert) {
   return steps(assert)
-    .then('I should find a file', function(next){
+    .then('I should find a file', function() {
       assert.ok(true, this.step);
-      next();
     });
 }

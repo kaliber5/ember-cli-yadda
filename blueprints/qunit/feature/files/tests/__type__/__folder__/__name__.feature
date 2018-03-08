@@ -1,4 +1,4 @@
-@application
+<%= annotation %>
 Feature: <%= featureName %>
 
   Scenario: the one where I type ember g feature

@@ -12,6 +12,17 @@ const file = chai.file;
 
 const fixture = require('../helpers/fixture');
 
+const testTypes = [
+  'acceptance',
+  'integration',
+  'unit',
+];
+
+const frameworkTypes = [
+  'qunit',
+  'mocha'
+];
+
 describe('Acceptance: ember generate ember-cli-yadda', function() {
   setupTestHooks(this);
 
@@ -19,10 +30,7 @@ describe('Acceptance: ember generate ember-cli-yadda', function() {
     return emberNew();
   });
 
-  [
-    'qunit',
-    'mocha'
-  ].forEach((testFramework) => {
+  frameworkTypes.forEach((testFramework) => {
 
     describe(testFramework, function() {
 
@@ -41,9 +49,9 @@ describe('Acceptance: ember generate ember-cli-yadda', function() {
         let fixtureFiles = [
           'helpers/yadda.js',
           'helpers/yadda-annotations.js',
-          // 'unit/steps/steps.js',
-          'acceptance/steps/steps.js',
-        ];
+        ].concat(
+          testTypes.map((type) => `${type}/steps/steps.js`)
+        );
 
         return emberGenerate(args)
           .then(() => fixtureFiles.forEach((fileName) => expect(file(`tests/${fileName}`)).to.equal(fixture(`main/${testFramework}/${fileName}`))));

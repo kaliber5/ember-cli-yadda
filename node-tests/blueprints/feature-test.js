@@ -10,6 +10,17 @@ const expect = require('ember-cli-blueprint-test-helpers/chai').expect;
 
 const fixture = require('../helpers/fixture');
 
+const testTypes = [
+  'acceptance',
+  'integration',
+  'unit',
+];
+
+const frameworkTypes = [
+  'qunit',
+  'mocha'
+];
+
 describe('Acceptance: ember generate and destroy feature', function() {
   setupTestHooks(this);
 
@@ -17,10 +28,7 @@ describe('Acceptance: ember generate and destroy feature', function() {
     return emberNew();
   });
 
-  [
-    'qunit',
-    'mocha'
-  ].forEach((testFramework) => {
+  frameworkTypes.forEach((testFramework) => {
 
     describe(testFramework, function() {
 
@@ -33,14 +41,26 @@ describe('Acceptance: ember generate and destroy feature', function() {
         });
       }
 
-      it('feature foo', function() {
+      it('ember g feature foo', function() {
         let args = ['feature', 'foo'];
 
-        // pass any additional command line options in the arguments array
         return emberGenerateDestroy(args, (file) => {
           expect(file('tests/acceptance/foo.feature')).to.equal(fixture('acceptance/foo.feature'));
           expect(file('tests/acceptance/steps/foo-steps.js')).to.equal(fixture(`acceptance/${testFramework}/foo-steps.js`));
         });
+      });
+
+      testTypes.forEach((type) => {
+
+        it(`ember g feature foo --type=${type}`, function() {
+          let args = ['feature', 'foo', `--type=${type}`];
+
+          return emberGenerateDestroy(args, (file) => {
+            expect(file(`tests/${type}/foo.feature`)).to.equal(fixture(`${type}/foo.feature`));
+            expect(file(`tests/${type}/steps/foo-steps.js`)).to.equal(fixture(`${type}/${testFramework}/foo-steps.js`));
+          });
+        });
+
       });
     });
   });
