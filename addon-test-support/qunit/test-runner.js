@@ -40,10 +40,10 @@ function testScenario(scenario, feature, yadda, yaddaAnnotations, library) {
   } else {
     test(`Scenario: ${scenario.title}`, function(assert) {
       let self = this;
-      return new EmberPromise(function(resolve) {
+      return new EmberPromise(function(resolve, reject) {
         yadda.Yadda(library.default(assert), self).yadda(scenario.steps, { ctx: {} }, function next(err, result) {
           if (err) {
-            throw err;
+            reject(err);
           }
           resolve(result);
         });
