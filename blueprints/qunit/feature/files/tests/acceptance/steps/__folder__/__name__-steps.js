@@ -5,8 +5,7 @@ import steps from '<%= foldersUp %>steps';
 
 export default function(assert) {
   return steps(assert)
-    .then('I should find a file', function(next) {
+    .then('I should find a file', function() {
       assert.ok(true, this.step);
-      next();
     });
 }

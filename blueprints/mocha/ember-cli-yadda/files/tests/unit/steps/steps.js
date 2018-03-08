@@ -1,11 +1,12 @@
 import yadda from '../../helpers/yadda';
+import { expect } from 'chai';
 
-export default function(assert) {
+export default function() {
   return yadda.localisation.English.library()
     .given('I type "Ember g feature make-feature"', function(){
-      assert.ok(true, this.step);
+      expect(true, this.step).to.be.true;
     })
     .when('I look in the folder', function(){
-      assert.ok(true, this.step);
+      expect(true, this.step).to.be.true;
     });
 }

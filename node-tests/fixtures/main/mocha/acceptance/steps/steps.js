@@ -1,14 +1,14 @@
 import yadda from '../../helpers/yadda';
+import { expect } from 'chai';
+import { visit } from '@ember/test-helpers';
 
 export default function() {
   return yadda.localisation.English.library()
-    .given('I type "Ember g feature make-feature"', function(next) {
-      visit('/');
-      // Add your own assert library
-      andThen(() => next());
+    .given('I type "Ember g feature make-feature"', async function() {
+      await visit('/');
+      expect(true, this.step).to.be.true;
     })
-    .when('I look in the folder', function(next) {
-      // Add your own assert library
-      next();
+    .when('I look in the folder', function() {
+      expect(true, this.step).to.be.true;
     });
 }
