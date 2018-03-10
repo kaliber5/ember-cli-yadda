@@ -24,7 +24,6 @@
   "dependencies": {
     "broccoli-persistent-filter": "^1.4.3",
     "ember-cli-babel": "^6.6.0",
-    "inflected": "^1.1.6",
     "yadda": "*"
   },
   "devDependencies": {
@@ -53,7 +52,7 @@
     "loader.js": "^4.2.3"
   },
   "engines": {
-    "node": "^4.5 || 6.* || >= 7.*"
+    "node": "6.* || >= 7.*"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",

@@ -6,24 +6,17 @@ import ENV from '../../../config/environment';
 
 export default function(assert) {
   return steps(assert)
-  .given('the feature this scenario belongs in does not have an annotation', function(next) {
+  .given('the feature this scenario belongs in does not have an annotation', function() {
     assert.ok(true, this.step);
-    next();
   })
-  .when('the config does not specify any annotations', function(next) {
+  .when('the config does not specify any annotations', function() {
     assert.ok(noAnnotations(), this.step);
-    next();
   })
-  .then('this test passes', function(next) {
+  .then('this test passes', function() {
     assert.ok(true, this.step);
-    next();
   });
 }
 
 function noAnnotations() {
-  if (ENV.annotations && ENV.annotations.length >= 0) {
-    return false;
-  } else {
-    return true;
-  }
+  return !(ENV.annotations && ENV.annotations.length >= 0);
 }

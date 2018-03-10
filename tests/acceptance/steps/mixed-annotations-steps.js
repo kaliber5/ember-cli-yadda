@@ -6,36 +6,27 @@ import ENV from '../../../config/environment';
 
 export default function(assert) {
   return steps(assert)
-  .given('this scenario has annotation @acceptance', function(next) {
+  .given('this scenario has annotation @acceptance', function() {
     assert.ok(true, this.step);
-    next();
   })
-  .given('the config specifies the @acceptance annotation', function(next) {
-    assert.ok(hasAnnotation('acceptance'), this.step);
-    next();
+  .given('the config specifies the @$annotation annotation or none', function(annotation) {
+    assert.ok(hasAnnotationOrNone(annotation), this.step);
   })
-  .given('this scenario has annotation @smoke', function(next) {
+  .given('this scenario has annotation @smoke', function() {
     assert.ok(true, this.step);
-    next();
   })
-  .given('the config specifies the @smoke annotation', function(next) {
-    assert.ok(hasAnnotation('smoke'), this.step);
-    next();
-  })
-  .when('I look at the test results', function(next) {
+  .when('I look at the test results', function() {
     assert.ok(true, this.step);
-    next();
   })
-  .then('the assert in the given step should be shown as a success', function(next) {
+  .then('the assert in the given step should be shown as a success', function() {
     assert.ok(true, this.step);
-    next();
   });
 }
 
-function hasAnnotation(annotation) {
+function hasAnnotationOrNone(annotation) {
   if (ENV.annotations && ENV.annotations.length >= 0) {
     return ENV.annotations.indexOf(annotation) >= 0;
   } else {
-    return false;
+    return true;
   }
 }

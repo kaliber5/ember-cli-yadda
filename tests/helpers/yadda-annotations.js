@@ -1,9 +1,9 @@
 import ENV from '../../config/environment';
-import { skip } from 'ember-qunit';
+import { skip } from 'qunit';
+import { setupApplicationTest, setupRenderingTest, setupTest } from 'ember-qunit';
 
 // this logic could be anything, but in this case...
 // if @ignore, then return skip (for backwards compatibility)
-// if no annotations are set in the config, run everything without an annotation (for backwards compatibility)
 // if have annotations in config, then only run those that have a matching annotation
 function checkAnnotations(annotations) {
 
@@ -24,17 +24,6 @@ function checkAnnotations(annotations) {
 
     // no match, so don't run it
     return logIt;
-
-  } else {
-    // no annotations set, so run it for backwards compatibility
-    // unless it has annotations, then don't run it
-    if (Object.keys(annotations).length) {
-      // has annotation, so don't run it
-      return logIt;
-    } else {
-      // no annotations, so test it
-      return 'testIt';  // return something other than a function
-    }
   }
 }
 
@@ -56,4 +45,35 @@ function runScenario(featureAnnotations, scenarioAnnotations) {
   return checkAnnotations(scenarioAnnotations);
 }
 
-export { runFeature, runScenario };
+// setup tests
+// you can override these function to add additional setup setups, or handle new setup related annotations
+function setupFeature(featureAnnotations) {
+  return setupYaddaTest(featureAnnotations);
+}
+
+function setupScenario(featureAnnotations, scenarioAnnotations) {
+  let setupFn = setupYaddaTest(scenarioAnnotations);
+  if (setupFn && (featureAnnotations.setupapplicationtest || featureAnnotations.setuprenderingtest || featureAnnotations.setuptest)) {
+    throw new Error('You must not assign any @setupApplicationTest, @setupRenderingTest or @setupTest annotations to a scenario as well as its feature!');
+  }
+  return setupFn;
+}
+
+function setupYaddaTest(annotations) {
+  if (annotations.setupapplicationtest) {
+    return setupApplicationTest;
+  }
+  if (annotations.setuprenderingtest) {
+    return setupRenderingTest;
+  }
+  if (annotations.setuptest) {
+    return setupTest;
+  }
+}
+
+export {
+  runFeature,
+  runScenario,
+  setupFeature,
+  setupScenario
+};
