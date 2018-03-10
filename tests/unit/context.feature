@@ -1,4 +1,4 @@
-@context
+@setupTest
 Feature: ember unit test
 
   Scenario: has context

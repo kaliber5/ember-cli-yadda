@@ -1,4 +1,4 @@
-@application
+@setupApplicationTest
 Feature: write a nice dasherized feature
 
   Scenario: the one where I type ember g feature

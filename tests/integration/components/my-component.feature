@@ -1,4 +1,4 @@
-@rendering
+@setupRenderingTest
 Feature: my component
 
   Scenario: component can render
