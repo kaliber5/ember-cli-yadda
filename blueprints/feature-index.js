@@ -1,9 +1,9 @@
 'use strict';
 
 const annotationMap = {
-  acceptance: '@application',
-  integration: '@rendering',
-  unit: '@context'
+  acceptance: '@setupApplicationTest',
+  integration: '@setupRenderingTest',
+  unit: '@setupTest'
 };
 
 module.exports = {

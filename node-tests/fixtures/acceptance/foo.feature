@@ -1,4 +1,4 @@
-@application
+@setupApplicationTest
 Feature: foo
 
   Scenario: the one where I type ember g feature

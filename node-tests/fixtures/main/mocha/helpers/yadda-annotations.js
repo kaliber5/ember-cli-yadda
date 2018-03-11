@@ -60,13 +60,13 @@ function setupScenario(featureAnnotations, scenarioAnnotations) {
 }
 
 function setupYaddaTest(annotations) {
-  if (annotations.application) {
+  if (annotations.setupapplicationtest) {
     return setupApplicationTest;
   }
-  if (annotations.rendering) {
+  if (annotations.setuprenderingtest) {
     return setupRenderingTest;
   }
-  if (annotations.context) {
+  if (annotations.setuptest) {
     return setupTest;
   }
 }
