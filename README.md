@@ -2,9 +2,21 @@
 [![Ember Observer Score](http://emberobserver.com/badges/ember-cli-yadda.svg)](http://emberobserver.com/addons/ember-cli-yadda)
 # Ember-cli-yadda
 
-This ember-cli addon facilitates writing acceptance and unit tests in the Gherkin language and executing them against your Ember app.
+This Ember CLI addon facilitates writing BDD tests in the Gherkin language and executing them against your Ember app.
 
 [@mschinis (Micheal Schinis)](https://github.com/mschinis) Did a great talk at @emberlondon [BDD approach with ember using `ember-cli-yadda`](https://vimeo.com/146828818).
+
+It uses the [yadda](https://github.com/acuminous/yadda) library to parse and run your feature files, and integrates into
+your Ember test setup using either [ember-qunit](https://github.com/emberjs/ember-qunit) or
+[ember-mocha](https://github.com/emberjs/ember-mocha).
+
+The following describes the use of ember-cli-yadda >= v0.4.0 which works only with the latest modern
+Ember testing APIs, as laid out in the RFCs 
+[232](https://github.com/emberjs/rfcs/blob/master/text/0232-simplify-qunit-testing-api.md) 
+and 
+[268](https://github.com/emberjs/rfcs/blob/master/text/0268-acceptance-testing-refactor.md).
+
+For the older APIs use v0.3.x and have a look at our [Legacy Guide](docs/legacy.md).
 
 ## Installation
 
@@ -14,50 +26,53 @@ Installing ember-cli-yadda is a breeze. All you need to do is run the following 
 ember install ember-cli-yadda
 ```
 
-##### Versions >= 0.2.0
-
 This adds the latest version of yadda to your node modules, along with [ember-browserify](https://www.npmjs.com/package/ember-browserify) (to allow yadda to run in the browser). It also adds the following files:
 
 ```
 /tests/acceptance/steps/steps.js
+/tests/integration/steps/steps.js
 /tests/unit/steps/steps.js
+/tests/helpers/yadda.js
+/tests/helpers/yadda-annotations.js
 ```
 
 You may specify the version of yadda by changing it in package.json and running `npm install`.
 
-##### Versions <= 0.1.0
+## Upgrading
 
-ember-browserify is not used.  Instead, yadda is also added to your bower dependencies.  The files listed above are also added.
+To upgrade to the latest version of this addon from a previous release < 0.4.0, including refactoring your existing 
+tests to Ember's new testing APIs, follow these steps:
 
-After installation the addon will have added the most recent yadda version to your bower dependencies. As it comes with all yadda releases in its dist folder, you can specify which yadda version to include in your ember-cli build:
-
-```js
-// ember-cli-build.js
-
-    var app = new EmberApp({
-        'ember-cli-yadda': {
-            'yaddaVersion': '0.17.6'
-        }
-    });
-
-```
-
-Running `ember serve` will make the test results available at `http://localhost:4200/tests`.
-
-##### Upgrading from <= 0.1.0 to >= 0.2.0
-1. Un-install yadda from your bower dependencies: `bower uninstall yadda --save`.
-2. Install ember-cli-yadda: `ember install ember-cli-yadda`.
-3. If a specific version of yadda is being used:
-    * Remove the code from ember-cli-build.js that specifies the version.
-    * Un-install the latest version of yadda from npm: `npm uninstall yadda --save-dev`.
-    * Install the desired version of yadda: `npm install yadda@<desired version> --save-dev`.
-
+- Install the latest version of ember-cli-yadda.
+- Run `ember g ember-cli-yadda` to add the most recent files from the blueprint to your project.
+- Add the appropriate [setup annotation](#setup-tests) to each Feature or Scenario.
+- Refactor your step files to use the new testing APIs:
+  - for application tests, skip using Ember's global test helpers and use those provided by [@ember/test-helpers](https://github.com/emberjs/ember-test-helpers).
+  - use `async`/`await` for all asynchronous operations, including `andThen()`
+  - [ember-test-helpers-codemod](https://github.com/simonihmig/ember-test-helpers-codemod) will be able to do most of 
+    these changes automatically
+  - For further details have a look at the [Migration Guide for QUnit](https://github.com/emberjs/ember-qunit/blob/master/docs/migration.md)
+    or the [Migration Guide for Mocha](https://github.com/emberjs/ember-mocha/blob/master/docs/migration.md#upgrading-to-the-new-testing-apis)
+- *Optional*: customize `tests/helpers/yadda-annotations.js` with any additional setup logic that is needed, see 
+  [here](#customization)
 
 ## Usage
-This ember-cli addon provides you with two blueprints with which you can create feature files.
 
-##### Acceptance tests
-If you want to create acceptance tests, you can use ``ember g feature [feature title]`` which generates a feature file for your acceptance tests and a step definition.
+The following describes the specific features and Ember integration points of ember-cli-yadda. For general documentation
+on how to write yadda-based tests please consult the [Yadda User Guide](https://acuminous.gitbooks.io/yadda-user-guide/en/).
+
+### Creating feature files
+
+This ember-cli addon provides you with a blueprint with which you can create feature files:
+
+```sh
+ember g feature [feature title] --type=[acceptance|integration|unit]
+```
+
+#### Acceptance tests
+
+For acceptance tests you can omit the `--type`  option. So you can use `ember g feature [feature title]` which generates
+a feature file for your acceptance tests and a step definition.
 
 For example:
 
@@ -72,28 +87,16 @@ This will generate the following files in your project directory:
 /tests/acceptance/make-a-feature.feature
 ```
 
-When using Mocha as your test framework, you have the option to run each scenario's step as a separate test, with all steps grouped within a Mocha `describe` block. If a step is failing, all following steps of that scenario will then be marked as pending. This way you get a much clearer picture on where (which step) a possible failure is happening. To opt in into that mode, use the `separateSteps` config option. 
- 
- ```js
- // ember-cli-build.js
- 
-     var app = new EmberApp({
-         'ember-cli-yadda': {
-             'separateSteps': true
-         }
-     });
- 
- ```
- 
- *Note that this mode is currently not available when you are using QUnit as your test framework!*
+#### Integration or unit tests
 
-##### Unit tests
-To create a unit test, you can use ``ember g feature-unit [feature title]`` which generates a feature and step definition file where you can write your unit tests.
+To create an integration or unit test, you can use `ember g feature [feature title] --type=integration` for an 
+integration test, or `--type=unit` for a unit test. This generates a feature and step definition file where you can 
+write your tests.
 
 For example:
 
 ```sh
-ember g feature-unit make-a-feature
+ember g feature make-a-feature --type=unit
 ```
 
 This will generate the following files in your project directory:
@@ -103,11 +106,12 @@ This will generate the following files in your project directory:
 /tests/unit/make-a-feature.feature
 ```
 
-## Writing tests
+### Writing tests
 
-All tests are asynchronous so when writing steps you should always call `next`. For example:
+Let's take this example of an acceptance test feature:
 
 ```gherkin
+@setupApplicationTest
 Feature: bananas rot
 
   Scenario: bananas rot faster when next to apples
@@ -117,21 +121,29 @@ Feature: bananas rot
     Then the banana rots
 ```
 
-Because we probably have more features about bananas. We add the `Given I have bananas` to the global steps file: `/tests/acceptance/steps.js`
+The `@setupApplicationTest` annotation will setup all scenarios of this feature as application tests, using the 
+`setupApplicationTest()` function provided by either `ember-qunit` or `ember-mocha`. See the [Annotations](#annotations)
+section below for more information on how to setup your tests.
+
+Because we probably have more features about bananas, we add the `Given I have bananas` to the global steps file: 
+`/tests/acceptance/steps.js`
 
 ```js
 import yadda from '../../helpers/yadda';
+import { visit } from '@ember/test-helpers'; 
 
 export default function(assert) {
   return yadda.localisation.English.library()
-    .given("I have bananas", function(next) {
-      visit("/bananas")
-      andThen(() => next());
+    .given("I have bananas", async function() {
+      await visit("/bananas");
     });
 }
 ```
 
-Notice how I wrapped the call to next in an `andThen` this tells the yadda to continue to the next step when the application routed to the `/bananas` route. Then fact that it's next to apples is probably unique to this Feature so we'll add it to the feature specific step definitions in `/tests/acceptance/steps/bananas-rot-feature-steps.js`. That will look like this:
+*Notice that the preferable way to handle asynchronous steps like the one above is to use `async`/ `await`. But you can 
+also explicitly return a promise or use a `next()` [callback](https://acuminous.gitbooks.io/yadda-user-guide/en/usage/step-libraries.html).*
+
+The fact that "it's next to apples" is probably unique to this Feature so we'll add it to the feature specific step definitions in `/tests/acceptance/steps/bananas-rot-feature-steps.js`. That will look like this:
 
 ```js
 import steps from './steps';
@@ -141,35 +153,31 @@ import steps from './steps';
 
 export default function(assert) {
   return steps(assert)
-    .given('it\'s next to apples', function(next) {
-      const apples = find('.apple');
+    .given('it\'s next to apples', function() {
+      let apples = this.element.querySelectorAll('.apple');
       assert.ok(apples.length > 0)
     })
-    .when('left toghether for a while', function(next) {
+    .when('left together for a while', function(next) {
       // bananas rot really quickly next to apples.
-      setTimeout(function() {
-        assert.ok(true);
-        next();
-      }, 1000);
+      setTimeout(next, 1000);
     })
-    .then('the banana rots', function (next) {
-      const banana = find('.banana');
-      assert.ok(banana.hasClass('rotten'));
-      next();
+    .then('the banana rots', function () {
+      let banana = this.element.querySelector('.banana');
+      assert.ok(banana.classList.contains('rotten'));
     });
 }
 ```
-**NOTE:** If you are creating a unit test, you need to use `<unit type>/<file name>` when using the generator. This allows ember-cli-yadda to automatically find and import the component, where it will run the tests against.
 
-For example, creating a feature file for a component named `form-select`, you would use `ember g feature-unit components/form-select`
+#### Important information
 
-You can skip tests by adding the `@ignore` annotation above the Scenario or Feature. 
-
-## Important information
 ##### Scope and helpers
-ember-cli-yadda passes the original scope down to each step definition. This means that you have access to the same Ember helpers, like `andThen()` and `find()`, as you did when writing a normal acceptance/unit test in mocha/qunit.
+
+ember-cli-yadda passes the original scope down to each step definition. This means that you have access to the same 
+context (like `this.element` or `this.owner`) and helpers from `@ember/test-helpers` (like `click()`), as you did when 
+writing a normal test in QUnit/Mocha.
 
 ##### Sharing variables between steps
+
 You can easily share variables between your steps, by either creating a new variable outside your step chain, or by storing the values in `this.ctx` in each step.
 
 For Example:
@@ -181,43 +189,91 @@ For Example:
 
   export default function(assert) {
     return steps(assert)
-      .given('I add something to the context', function(next) {
+      .given('I add something to the context', function() {
         // Assign 'hello' to the variable outside the step chain
         something = 'hello';
         // Assign 'there' to a new variable in `this.ctx`
         this.ctx.something = 'there';
         assert.ok(true, this.step);
-        next();
       })
-      .then('it should be there in the next step', function(next) {
+      .then('it should be there in the next step', function() {
         // Do an assertion to check that 'there' has been passed correctly
         // to the next step
         assert.equal(this.ctx.something, 'there', this.step);
-        next();
       })
-      .then('external variable should be there in the next step', function(next){
+      .then('external variable should be there in the next step', function(){
         // Assert that the external variable still holds the information
         // we set in the first step
         assert.equal(something,'hello',this.step);
       });
   }
 ```
-##### Testing components that depend on other components
-If you need to test a component, that depends on other components, you can use the `@needs` gherkin decorator to specify what this component depends on.
 
-For example:
-```gherkin
-  @needs=component:ember-selectize
-  Feature: Component form-select
+### Annotations
 
-    Scenario: Check if component renders
-      Given I initialize the component
-      When I render it
-      Then it should be rendered
+You already saw the use of the `@setupApplicationTest` annotation in the example feature file above.
+Yadda's [support for annotations](https://acuminous.gitbooks.io/yadda-user-guide/en/feature-specs/annotations.html`) can
+be used to customize the way tests are run.
+
+The implementation for the way certain annotations affect your tests lives in the `tests/yadda-annotations.js` file. 
+The addon installs this file with a default implementation as described below, but you can freely customize it at your
+will.
+
+#### Skipping tests
+
+You can skip tests by adding the `@ignore` annotation above the Scenario or Feature. 
+
+#### Test suites
+
+You can set `ENV.annotations` to an array of annotations (either statically or e.g. by assigning them from an 
+environment variable like `process.env.ANNOTATIONS`). This will then run only those Features or Scenarios that have one
+of these annotations assigned.
+
+#### Setup tests
+
+For each of the setup functions already known from `ember-qunit` or `ember-mocha`, there exists a corresponding 
+annotation to setup your Feature/Scenario accordingly:
+
+- `@setupTest` for (unit) tests requiring the DI container of Ember to be set up
+- `@setupRenderingTest` for (integration) tests allowing you to call `render`, e.g. for component tests
+- `@setupApplicationTest` for (acceptance) tests requiring the whole application to be booted
+
+#### Customization
+
+You can customize how annotations are handled in your app's `tests/yadda-annotations.js` file, e.g. to add support for 
+additional annotations, or extend the existing ones. This module has to export these hooks, that are called by this
+addon's test runner:
+
+- `runFeature`: called for each feature. If you return a function, this will be called to run the feature, instead of
+  the default implementation.
+- `runScenario`: similar to `runFeature`, but called for each scenario.
+- `setupFeature`: called for each feature to setup the test environment. You can call QUnit's or Mocha's `beforeEach` 
+  and `afterEach` functions here to add custom setup/teardown work.
+- `setupScenario`: similar to `setupFeature`, but called for each scenario.
+
+Have a look at the existing implementation and the comments present in your `tests/yadda-annotations.js` file!
+
+Here is an example to extend the defaul implementation of the `@setupApplicationTest` annotation to also call the 
+`setupMirage()` function provided by `ember-cli-mirage` to setup the Mirage server:
+
+```js
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+
+// your existing tests/yadda-annotations.js file...
+
+function setupYaddaTest(annotations) {
+  if (annotations.setupapplicationtest) { // lower case!
+    return function(hooks) {
+      setupApplicationTest(hooks);
+      setupMirage(hooks);
+    }
+  }
+  // ...
+}
 ```
 
 ## Inner workings
 
-This ember addon registers a preprocessor that parses `.feature` / `.spec` / `.specification` files using [yadda](https://github.com/acuminous/yadda) and generates a `-test.js` file in the acceptance test folder. It also adds a little loader helper ``/tests/helpers/yadda.js`` because yadda does not define an amd module.
+This ember addon registers a preprocessor that parses `.feature` / `.spec` / `.specification` files using [yadda](https://github.com/acuminous/yadda) and generates a `-test.js` file in the apropriate test folder. It also adds a little loader helper ``/tests/helpers/yadda.js`` because yadda does not define an amd module.
 
-The addon also adds two ES6 modules `/tests/acceptance/steps/steps`, `/tests/unit/steps/steps` you can extend in feature specific step definitions. Any shared step definitions should be moved to these file or included there, depending on the type of test you are running. Feature specific step definitions reside in ``/tests/acceptance/steps/`` and ``/tests/unit/steps``. The generated feature test js files import a ``/tests/[type]/steps/[feature title]-steps`` module, where type can either be `acceptance` or `unit`.
+The addon also adds ES6 modules `/tests/[type]/steps/steps` you can extend in feature specific step definitions. Any shared step definitions should be moved to these file or included there, depending on the type of test you are running. Feature specific step definitions reside in ``/tests/[type]/steps/``. The generated feature test js files import a ``/tests/[type]/steps/[feature title]-steps`` module, where type can either be `acceptance`, `integration` or `unit`.
