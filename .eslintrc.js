@@ -33,12 +33,14 @@ module.exports = {
         'config/**/*.js',
         'tests/dummy/config/**/*.js',
         'lib/feature-parser.js',
-        'blueprints/*.js'
+        'blueprints/*.js',
+        'node-tests/**/*.js'
       ],
       excludedFiles: [
         'app/**',
         'addon/**',
-        'tests/dummy/app/**'
+        'tests/dummy/app/**',
+        'node-tests/fixtures/**'
       ],
       parserOptions: {
         sourceType: 'script',
@@ -52,6 +54,14 @@ module.exports = {
       rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
         // add your custom rules and overrides for node files here
       })
+    },
+    {
+      files: [
+        'node-tests/**/*.js'
+      ],
+      env: {
+        mocha: true
+      }
     }
   ]
 };

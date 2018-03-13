@@ -1,7 +1,16 @@
 'use strict';
 
+const annotationMap = {
+  acceptance: '@setupApplicationTest',
+  integration: '@setupRenderingTest',
+  unit: '@setupTest'
+};
+
 module.exports = {
   description: 'Adds a feature to the project',
+  availableOptions: [
+    { name: 'type', type: String, aliases: ['t'], default: 'acceptance' },
+  ],
 
   locals(options) {
     return {
@@ -18,7 +27,9 @@ module.exports = {
           return './';
         }
         return (path + '/').replace(/.+?\//g, '../');
-      }())
+      }()),
+      type: options.type,
+      annotation: annotationMap[options.type] || ''
     };
   },
 
@@ -32,6 +43,9 @@ module.exports = {
     return {
       __folder__: function(options) {
         return options.locals.folder;
+      },
+      __type__: function(options) {
+        return options.locals.type;
       }
     };
   }
