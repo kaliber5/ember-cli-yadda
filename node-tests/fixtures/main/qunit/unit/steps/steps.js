@@ -1,7 +1,7 @@
 import yadda from '../../helpers/yadda';
 
 export default function(assert) {
-  return yadda.localisation.English.library()
+  return yadda.localisation.default.library()
     .given('I type "Ember g feature make-feature"', function(){
       assert.ok(true, this.step);
     })

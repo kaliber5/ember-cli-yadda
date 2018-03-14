@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { visit } from '@ember/test-helpers';
 
 export default function() {
-  return yadda.localisation.English.library()
+  return yadda.localisation.default.library()
     .given('I type "Ember g feature make-feature"', async function() {
       await visit('/');
       expect(true, this.step).to.be.true;

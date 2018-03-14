@@ -133,7 +133,7 @@ import yadda from '../../helpers/yadda';
 import { visit } from '@ember/test-helpers';
 
 export default function(assert) {
-  return yadda.localisation.English.library()
+  return yadda.localisation.default.library()
     .given("I have bananas", async function() {
       await visit("/bananas");
     });
