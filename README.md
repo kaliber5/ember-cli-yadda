@@ -289,7 +289,7 @@ module.exports = function(defaults) {
     }
   });
 ```
-See [yadda FeatureParser]([https://github.com/acuminous/yadda/blob/master/lib/parsers/FeatureParser.js#L8]) for yadda options.
+See [yadda FeatureParser](https://github.com/acuminous/yadda/blob/master/lib/parsers/FeatureParser.js#L8) for yadda options.
 
 ## Inner workings
 
