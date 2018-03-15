@@ -53,8 +53,8 @@ function setupFeature(featureAnnotations) {
 
 function setupScenario(featureAnnotations, scenarioAnnotations) {
   let setupFn = setupYaddaTest(scenarioAnnotations);
-  if (setupFn && (featureAnnotations.application || featureAnnotations.rendering || featureAnnotations.context)) {
-    throw new Error('You must not assign any @application, @rendering or @context annotations to a scenario as well as its feature!');
+  if (setupFn && (featureAnnotations.setupapplicationtest || featureAnnotations.setuprenderingtest || featureAnnotations.setuptest)) {
+    throw new Error('You must not assign any @setupapplicationtest, @setuprenderingtest or @setuptest annotations to a scenario as well as its feature!');
   }
   return setupFn;
 }
