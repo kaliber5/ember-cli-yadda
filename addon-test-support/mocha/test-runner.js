@@ -36,7 +36,7 @@ export default function testFeature(feature, yadda, yaddaAnnotations, library) {
 function testScenario(scenario, feature, yadda, yaddaAnnotations, library) {
   let scenarioAction = yaddaAnnotations.runScenario(feature.annotations, scenario.annotations);
   if (typeof scenarioAction === 'function') {
-    scenarioAction.call(this, scenario);
+    scenarioAction.apply(this, arguments);
   } else {
     it(`Scenario: ${scenario.title}`, function() {
       let self = this;
