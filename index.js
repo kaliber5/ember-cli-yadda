@@ -34,5 +34,14 @@ module.exports = {
       options.persist = true;
     }
     this._options = options;
+  },
+  options: {
+    autoImport: {
+      webpack: {
+        node: {
+          fs: "empty"
+        }
+      }
+    }
   }
 };
