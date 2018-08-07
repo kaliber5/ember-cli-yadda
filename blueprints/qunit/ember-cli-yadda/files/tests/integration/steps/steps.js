@@ -1,4 +1,4 @@
-import yadda from '../../helpers/yadda';
+import { yadda } from 'ember-cli-yadda/test-support/yadda';
 
 export default function(assert) {
   return yadda.localisation.default.library()

@@ -24,12 +24,12 @@
   },
   "dependencies": {
     "broccoli-persistent-filter": "^1.4.3",
+    "ember-auto-import": "^1.2.8",
     "ember-cli-babel": "^6.6.0",
     "yadda": "*"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
-    "ember-browserify": "1.1.13",
     "ember-cli": "~3.0.0",
     "ember-cli-blueprint-test-helpers": "^0.18.3",
     "ember-cli-dependency-checker": "^2.0.0",

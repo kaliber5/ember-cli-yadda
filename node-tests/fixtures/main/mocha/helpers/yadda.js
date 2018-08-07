@@ -1,2 +1,2 @@
-import yadda from 'npm:yadda';
+import { yadda } from 'ember-cli-yadda/test-support/yadda';
 export default yadda;

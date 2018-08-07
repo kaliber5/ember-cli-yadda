@@ -5,6 +5,16 @@ const FeatureParser = require('./lib/feature-parser');
 
 module.exports = {
   name: 'ember-cli-yadda',
+  options: {
+    autoImport:{
+      exclude: ['mocha'],
+      webpack: {
+        node: {
+          fs: "empty"
+        }
+      }
+    }
+  },
   getTestFramework() {
     let dependencies = this.project.dependencies();
     if ('ember-cli-mocha' in dependencies || 'ember-mocha' in dependencies) {
