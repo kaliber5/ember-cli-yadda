@@ -26,17 +26,16 @@ Installing ember-cli-yadda is a breeze. All you need to do is run the following 
 ember install ember-cli-yadda
 ```
 
-This adds the latest version of yadda to your node modules, along with [ember-browserify](https://www.npmjs.com/package/ember-browserify) (to allow yadda to run in the browser). It also adds the following files:
+This adds the following files:
 
 ```
 /tests/acceptance/steps/steps.js
 /tests/integration/steps/steps.js
 /tests/unit/steps/steps.js
-/tests/helpers/yadda.js
 /tests/helpers/yadda-annotations.js
 ```
 
-You may specify the version of yadda by changing it in package.json and running `npm install`.
+You may specify the version of yadda by adding it in package.json and running `npm install`.
 
 ## Upgrading
 
