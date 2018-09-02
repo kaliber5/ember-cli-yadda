@@ -23,8 +23,9 @@
     "nodetest": "mocha node-tests/blueprints --recursive"
   },
   "dependencies": {
+    "broccoli-funnel": "^2.0.1",
     "broccoli-persistent-filter": "^1.4.3",
-    "ember-auto-import": "^1.2.8",
+    "ember-auto-import": "^1.2.13",
     "ember-cli-babel": "^6.6.0",
     "yadda": "*"
   },

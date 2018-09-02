@@ -1,4 +1,4 @@
-import { yadda } from 'ember-cli-yadda/test-support/yadda';
+import { yadda } from 'ember-cli-yadda';
 import { expect } from 'chai';
 import { visit } from '@ember/test-helpers';
 

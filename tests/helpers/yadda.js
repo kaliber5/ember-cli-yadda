@@ -1,2 +1,2 @@
-import { yadda } from 'ember-cli-yadda/test-support/yadda';
+import { yadda } from 'ember-cli-yadda';
 export default yadda;
