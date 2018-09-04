@@ -39,21 +39,7 @@ You may specify the version of yadda by adding it in package.json and running `n
 
 ## Upgrading
 
-To upgrade to the latest version of this addon from a previous release < 0.4.0, including refactoring your existing
-tests to Ember's new testing APIs, follow these steps:
-
-- Install the latest version of ember-cli-yadda.
-- Run `ember g ember-cli-yadda` to add the most recent files from the blueprint to your project.
-- Add the appropriate [setup annotation](#setup-tests) to each Feature or Scenario.
-- Refactor your step files to use the new testing APIs:
-  - for application tests, skip using Ember's global test helpers and use those provided by [@ember/test-helpers](https://github.com/emberjs/ember-test-helpers).
-  - use `async`/`await` for all asynchronous operations, including `andThen()`
-  - [ember-test-helpers-codemod](https://github.com/simonihmig/ember-test-helpers-codemod) will be able to do most of
-    these changes automatically
-  - For further details have a look at the [Migration Guide for QUnit](https://github.com/emberjs/ember-qunit/blob/master/docs/migration.md)
-    or the [Migration Guide for Mocha](https://github.com/emberjs/ember-mocha/blob/master/docs/migration.md#upgrading-to-the-new-testing-apis)
-- *Optional*: customize `tests/helpers/yadda-annotations.js` with any additional setup logic that is needed, see
-  [here](#customization)
+See the [Release Notes](https://github.com/albertjan/ember-cli-yadda/releases).
 
 ## Usage
 
