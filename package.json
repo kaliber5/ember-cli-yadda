@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-yadda",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Ember-cli yadda addon for running Gherkin acceptance tests",
   "keywords": [
     "ember-addon",
@@ -23,13 +23,14 @@
     "nodetest": "mocha node-tests/blueprints --recursive"
   },
   "dependencies": {
+    "broccoli-funnel": "^2.0.1",
     "broccoli-persistent-filter": "^1.4.3",
+    "ember-auto-import": "^1.2.13",
     "ember-cli-babel": "^6.6.0",
     "yadda": "*"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
-    "ember-browserify": "1.1.13",
     "ember-cli": "~3.0.0",
     "ember-cli-blueprint-test-helpers": "^0.18.3",
     "ember-cli-dependency-checker": "^2.0.0",

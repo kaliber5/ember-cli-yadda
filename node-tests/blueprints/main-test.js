@@ -47,8 +47,7 @@ describe('Acceptance: ember generate ember-cli-yadda', function() {
         let args = ['ember-cli-yadda'];
 
         let fixtureFiles = [
-          'helpers/yadda.js',
-          'helpers/yadda-annotations.js',
+          'helpers/yadda-annotations.js'
         ].concat(
           testTypes.map((type) => `${type}/steps/steps.js`)
         );

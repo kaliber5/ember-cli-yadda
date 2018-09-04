@@ -118,7 +118,7 @@ Feature: bananas rot
 Because we probably have more features about bananas. We add the `Given I have bananas` to the global steps file: `/tests/acceptance/steps.js`
 
 ```js
-import yadda from '../../helpers/yadda';
+import { yadda } from '../../helpers/yadda';
 
 export default function(assert) {
   return yadda.localisation.English.library()
