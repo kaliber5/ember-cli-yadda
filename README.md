@@ -197,7 +197,7 @@ For Example:
 ### Annotations
 
 You already saw the use of the `@setupApplicationTest` annotation in the example feature file above.
-Yadda's [support for annotations](https://acuminous.gitbooks.io/yadda-user-guide/en/feature-specs/annotations.html`) can
+Yadda's [support for annotations](https://acuminous.gitbooks.io/yadda-user-guide/en/feature-specs/annotations.html) can
 be used to customize the way tests are run.
 
 The implementation for the way certain annotations affect your tests lives in the `tests/yadda-annotations.js` file.
