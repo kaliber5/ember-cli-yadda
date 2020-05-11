@@ -114,7 +114,7 @@ Because we probably have more features about bananas, we add the `Given I have b
 `/tests/acceptance/steps.js`
 
 ```js
-import { yadda } from 'ember-cli-yadda';
+import yadda from 'yadda';
 import { visit } from '@ember/test-helpers';
 
 export default function(assert) {
