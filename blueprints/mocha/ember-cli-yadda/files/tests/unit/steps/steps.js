@@ -1,4 +1,4 @@
-import { yadda } from 'ember-cli-yadda';
+import yadda from 'yadda';
 import { expect } from 'chai';
 
 export default function() {

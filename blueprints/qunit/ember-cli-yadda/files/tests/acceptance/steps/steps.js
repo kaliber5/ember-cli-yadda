@@ -1,4 +1,4 @@
-import { yadda } from 'ember-cli-yadda';
+import yadda from 'yadda';
 import { visit } from '@ember/test-helpers';
 
 export default function(assert) {
