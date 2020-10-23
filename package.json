@@ -32,19 +32,18 @@
   "dependencies": {
     "broccoli-funnel": "^2.0.1",
     "broccoli-persistent-filter": "^1.4.3",
-    "ember-auto-import": "^1.2.13",
+    "ember-auto-import": "^1.6.0",
     "ember-cli-babel": "^7.22.1",
     "ember-cli-htmlbars": "^5.3.1",
     "yadda": "*"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
-    "@embroider/test-setup": "^0.28.0",
+    "@embroider/test-setup": "^0.30.0",
     "@glimmer/component": "^1.0.2",
     "@glimmer/tracking": "^1.0.2",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
-    "ember-auto-import": "^1.6.0",
     "ember-cli": "~3.22.0",
     "ember-cli-blueprint-test-helpers": "^0.18.3",
     "ember-cli-dependency-checker": "^3.2.0",

@@ -990,6 +990,14 @@
     resolve "^1.8.1"
     semver "^5.6.0"
 
+"@embroider/test-setup@^0.30.0":
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/@embroider/test-setup/-/test-setup-0.30.0.tgz#a0fb48214b272bb6dd0d84ac1b668312ffc766e1"
+  integrity sha512-i1Nb5Z7NSw7OikfNf6OQE4ZL3RT1S1NFYrGe4r8qlX3u0oBLDMAC8RE7uO4WBn3sof2GoWmA9AL7RniuUGugdQ==
+  dependencies:
+    lodash "^4.17.20"
+    resolve "^1.17.0"
+
 "@eslint/eslintrc@^0.2.1":
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-0.2.1.tgz#f72069c330461a06684d119384435e12a5d76e3c"
@@ -4904,7 +4912,7 @@ ember-assign-polyfill@^2.6.0:
     ember-cli-babel "^7.20.5"
     ember-cli-version-checker "^2.0.0"
 
-ember-auto-import@^1.2.13:
+ember-auto-import@^1.6.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-1.7.0.tgz#dd809fbe3d40647f2af443072405094d0e77ecf5"
   integrity sha512-onp7XZKwiit3BgkOPV/obi3fvLJmDNKTTjRsVtYz63yWeyT3ahiM8BIvJYzHGL4cxlGLvwpTJy2HYBDs6ZtvoQ==
