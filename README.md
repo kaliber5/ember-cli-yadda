@@ -18,7 +18,17 @@ and
 
 For the older APIs use v0.3.x and have a look at our [Legacy Guide](docs/legacy.md).
 
-## Installation
+
+Compatibility
+------------------------------------------------------------------------------
+
+* Ember.js v3.16 or above
+* Ember CLI v2.13 or above
+* Node.js v10 or above
+
+
+Installation
+------------------------------------------------------------------------------
 
 Installing ember-cli-yadda is a breeze. All you need to do is run the following command in your project directory.
 
@@ -206,6 +216,7 @@ will.
 
 #### Skipping tests
 
+See the [Contributing](CONTRIBUTING.md) guide for details.
 You can skip tests by adding the `@ignore` annotation above the Scenario or Feature.
 
 #### Test suites
@@ -281,3 +292,15 @@ See [yadda FeatureParser](https://github.com/acuminous/yadda/blob/master/lib/par
 This ember addon registers a preprocessor that parses `.feature` / `.spec` / `.specification` files using [yadda](https://github.com/acuminous/yadda) and generates a `-test.js` file in the apropriate test folder. It also adds a little loader helper ``/tests/helpers/yadda.js`` because yadda does not define an amd module.
 
 The addon also adds ES6 modules `/tests/[type]/steps/steps` you can extend in feature specific step definitions. Any shared step definitions should be moved to these file or included there, depending on the type of test you are running. Feature specific step definitions reside in ``/tests/[type]/steps/``. The generated feature test js files import a ``/tests/[type]/steps/[feature title]-steps`` module, where type can either be `acceptance`, `integration` or `unit`.
+
+
+Contributing
+------------------------------------------------------------------------------
+
+See the [Contributing](CONTRIBUTING.md) guide for details.
+
+
+License
+------------------------------------------------------------------------------
+
+This project is licensed under the [MIT License](LICENSE.md).
