@@ -4,7 +4,8 @@ const path = require('path');
 const FeatureParser = require('./lib/feature-parser');
 
 module.exports = {
-  name: 'ember-cli-yadda',
+  name: require('./package').name,
+
   options: {
     autoImport:{
       exclude: ['mocha'],
