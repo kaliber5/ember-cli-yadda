@@ -32,7 +32,7 @@
   "dependencies": {
     "broccoli-funnel": "^3.0.8",
     "broccoli-persistent-filter": "^3.1.2",
-    "ember-auto-import": "^1.11.3",
+    "ember-auto-import": "^2.0.2",
     "ember-cli-babel": "^7.26.6",
     "ember-cli-htmlbars": "^5.7.1",
     "yadda": "*"
