@@ -1,3 +1,18 @@
+## v0.7.0 (2021-10-19)
+
+#### :boom: Breaking Change
+* [#246](https://github.com/kaliber5/ember-cli-yadda/pull/246) Update to ember-auto-import v2 ([@simonihmig](https://github.com/simonihmig))
+* [#248](https://github.com/kaliber5/ember-cli-yadda/pull/248) Update Ember to 3.28, drop support for 3.16 ([@simonihmig](https://github.com/simonihmig))
+* [#247](https://github.com/kaliber5/ember-cli-yadda/pull/247) Drop node 10 support ([@simonihmig](https://github.com/simonihmig))
+
+#### :rocket: Enhancement
+* [#246](https://github.com/kaliber5/ember-cli-yadda/pull/246) Update to ember-auto-import v2 ([@simonihmig](https://github.com/simonihmig))
+* [#248](https://github.com/kaliber5/ember-cli-yadda/pull/248) Update Ember to 3.28, drop support for 3.16 ([@simonihmig](https://github.com/simonihmig))
+
+#### Committers: 2
+- Simon Ihmig ([@simonihmig](https://github.com/simonihmig))
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+
 ## v0.6.0 (2020-11-06)
 
 #### :boom: Breaking Change
