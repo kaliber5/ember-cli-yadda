@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/albertjan/ember-cli-yadda.svg)](https://travis-ci.org/curit/ember-cli-yadda)
+[![CI](https://github.com/kaliber5/ember-cli-yadda/actions/workflows/ci.yml/badge.svg)](https://github.com/kaliber5/ember-cli-yadda/actions/workflows/ci.yml)
 [![Ember Observer Score](http://emberobserver.com/badges/ember-cli-yadda.svg)](http://emberobserver.com/addons/ember-cli-yadda)
 # Ember-cli-yadda
 
@@ -25,6 +25,9 @@ Compatibility
 * Ember.js v3.20 or above
 * Ember CLI v3.20 or above
 * Node.js v12 or above
+* ember-auto-import v2 or Embroider
+
+> Due to the way `yadda` is written, you need to add some [custom webpack config options](https://github.com/kaliber5/ember-cli-yadda/blob/master/ember-cli-build.js#L19-L38) when using Embroider!
 
 
 Installation

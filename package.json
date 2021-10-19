@@ -17,7 +17,7 @@
     "url": "https://github.com/kaliber5/ember-cli-yadda.git"
   },
   "license": "MIT",
-  "author": "CURIT, remkoboschker, albertjan",
+  "author": "CURIT, remkoboschker, albertjan, Simon Ihmig",
   "scripts": {
     "build": "ember build --environment=production",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel \"lint:!(fix)\"",
