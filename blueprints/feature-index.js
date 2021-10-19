@@ -3,7 +3,7 @@
 const annotationMap = {
   acceptance: '@setupApplicationTest',
   integration: '@setupRenderingTest',
-  unit: '@setupTest'
+  unit: '@setupTest',
 };
 
 module.exports = {
@@ -19,7 +19,9 @@ module.exports = {
       // lose the last section of the path /folder1/folder2/featureName
       // dasherize if path contains any spaces
       // do not forget the trailing slash
-      folder: options.args[1].split('/').slice(0, -1).join('/').replace(/\s/g, '-') + '/',
+      folder:
+        options.args[1].split('/').slice(0, -1).join('/').replace(/\s/g, '-') +
+        '/',
       // relative path to go back up to the tests/acceptance/steps folder
       foldersUp: (function () {
         let path = options.args[1].split('/').slice(0, -1).join('/');
@@ -27,9 +29,9 @@ module.exports = {
           return './';
         }
         return (path + '/').replace(/.+?\//g, '../');
-      }()),
+      })(),
       type: options.type,
-      annotation: annotationMap[options.type] || ''
+      annotation: annotationMap[options.type] || '',
     };
   },
 
@@ -41,12 +43,12 @@ module.exports = {
 
   fileMapTokens() {
     return {
-      __folder__: function(options) {
+      __folder__: function (options) {
         return options.locals.folder;
       },
-      __type__: function(options) {
+      __type__: function (options) {
         return options.locals.type;
-      }
+      },
     };
-  }
+  },
 };

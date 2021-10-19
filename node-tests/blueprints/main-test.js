@@ -12,48 +12,42 @@ const file = chai.file;
 
 const fixture = require('../helpers/fixture');
 
-const testTypes = [
-  'acceptance',
-  'integration',
-  'unit',
-];
+const testTypes = ['acceptance', 'integration', 'unit'];
 
-const frameworkTypes = [
-  'qunit',
-  'mocha'
-];
+const frameworkTypes = ['qunit', 'mocha'];
 
-describe('Acceptance: ember generate ember-cli-yadda', function() {
+describe('Acceptance: ember generate ember-cli-yadda', function () {
   setupTestHooks(this);
 
-  beforeEach(function() {
+  beforeEach(function () {
     return emberNew();
   });
 
   frameworkTypes.forEach((testFramework) => {
-
-    describe(testFramework, function() {
-
+    describe(testFramework, function () {
       if (testFramework === 'mocha') {
-        beforeEach(function() {
+        beforeEach(function () {
           return modifyPackages([
             { name: 'ember-cli-qunit', delete: true },
-            { name: 'ember-cli-mocha', dev: true }
+            { name: 'ember-cli-mocha', dev: true },
           ]);
         });
       }
 
-      it('adds required files', function() {
+      it('adds required files', function () {
         let args = ['ember-cli-yadda'];
 
-        let fixtureFiles = [
-          'helpers/yadda-annotations.js'
-        ].concat(
+        let fixtureFiles = ['helpers/yadda-annotations.js'].concat(
           testTypes.map((type) => `${type}/steps/steps.js`)
         );
 
-        return emberGenerate(args)
-          .then(() => fixtureFiles.forEach((fileName) => expect(file(`tests/${fileName}`)).to.equal(fixture(`main/${testFramework}/${fileName}`))));
+        return emberGenerate(args).then(() =>
+          fixtureFiles.forEach((fileName) =>
+            expect(file(`tests/${fileName}`)).to.equal(
+              fixture(`main/${testFramework}/${fileName}`)
+            )
+          )
+        );
       });
     });
   });

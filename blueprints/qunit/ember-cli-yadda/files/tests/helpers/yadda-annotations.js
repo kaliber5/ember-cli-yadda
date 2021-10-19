@@ -1,12 +1,15 @@
 import ENV from '../../config/environment';
 import { skip } from 'qunit';
-import { setupApplicationTest, setupRenderingTest, setupTest } from 'ember-qunit';
+import {
+  setupApplicationTest,
+  setupRenderingTest,
+  setupTest,
+} from 'ember-qunit';
 
 // this logic could be anything, but in this case...
 // if @ignore, then return skip (for backwards compatibility)
 // if have annotations in config, then only run those that have a matching annotation
 function checkAnnotations(annotations) {
-
   // if ignore is set then we want to skip for backwards compatibility
   if (annotations.ignore) {
     return ignoreIt;
@@ -14,11 +17,10 @@ function checkAnnotations(annotations) {
 
   // if have annotations set in config, the only run those that have a matching annotation
   if (ENV.annotations && ENV.annotations.length >= 0) {
-
     for (let annotation in annotations) {
       if (ENV.annotations.indexOf(annotation) >= 0) {
         // have match, so test it
-        return 'testIt';  // return something other than a function
+        return 'testIt'; // return something other than a function
       }
     }
 
@@ -29,7 +31,7 @@ function checkAnnotations(annotations) {
 
 // call back functions
 function ignoreIt(testElement) {
-  skip(`${testElement.title}`, function(/*assert*/) {});
+  skip(`${testElement.title}`, function (/*assert*/) {});
 }
 
 function logIt(testElement) {
@@ -53,8 +55,15 @@ function setupFeature(featureAnnotations) {
 
 function setupScenario(featureAnnotations, scenarioAnnotations) {
   let setupFn = setupYaddaTest(scenarioAnnotations);
-  if (setupFn && (featureAnnotations.setupapplicationtest || featureAnnotations.setuprenderingtest || featureAnnotations.setuptest)) {
-    throw new Error('You must not assign any @setupapplicationtest, @setuprenderingtest or @setuptest annotations to a scenario as well as its feature!');
+  if (
+    setupFn &&
+    (featureAnnotations.setupapplicationtest ||
+      featureAnnotations.setuprenderingtest ||
+      featureAnnotations.setuptest)
+  ) {
+    throw new Error(
+      'You must not assign any @setupapplicationtest, @setuprenderingtest or @setuptest annotations to a scenario as well as its feature!'
+    );
   }
   return setupFn;
 }
@@ -71,9 +80,4 @@ function setupYaddaTest(annotations) {
   }
 }
 
-export {
-  runFeature,
-  runScenario,
-  setupFeature,
-  setupScenario
-};
+export { runFeature, runScenario, setupFeature, setupScenario };
