@@ -8,7 +8,7 @@ module.exports = {
 
   options: {
     autoImport: {
-      exclude: ['mocha', 'qunit'],
+      exclude: ['mocha'],
       webpack: {
         resolve: {
           fallback: {
