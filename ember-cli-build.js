@@ -24,8 +24,15 @@ module.exports = function (defaults) {
     packagerOptions: {
       webpackConfig: {
         devtool: false,
+        resolve: {
+          fallback: {
+            fs: false,
+            path: false,
+            process: false,
+          },
+        },
         node: {
-          fs: 'empty', // this is needed for yadda :( https://github.com/acuminous/yadda/blob/master/lib/shims/index.js#L12
+          global: true,
         },
       },
     },
