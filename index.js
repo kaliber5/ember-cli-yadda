@@ -10,8 +10,15 @@ module.exports = {
     autoImport: {
       exclude: ['mocha', 'qunit'],
       webpack: {
+        resolve: {
+          fallback: {
+            fs: false,
+            path: false,
+            process: false,
+          },
+        },
         node: {
-          fs: 'empty',
+          global: true,
         },
       },
     },

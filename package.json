@@ -35,7 +35,7 @@
   "dependencies": {
     "broccoli-funnel": "^3.0.8",
     "broccoli-persistent-filter": "^3.1.2",
-    "ember-auto-import": "^1.11.3",
+    "ember-auto-import": "^2.2.3",
     "ember-cli-babel": "^7.26.6",
     "ember-cli-htmlbars": "^5.7.1",
     "yadda": "*"
@@ -78,7 +78,8 @@
     "qunit": "^2.16.0",
     "qunit-dom": "^1.6.0",
     "release-it": "^14.10.0",
-    "release-it-lerna-changelog": "^3.1.0"
+    "release-it-lerna-changelog": "^3.1.0",
+    "webpack": "^5.58.2"
   },
   "engines": {
     "node": "12.* || 14.* || >= 16"
