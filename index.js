@@ -7,14 +7,14 @@ module.exports = {
   name: require('./package').name,
 
   options: {
-    autoImport:{
-      exclude: ['mocha'],
+    autoImport: {
+      exclude: ['mocha', 'qunit'],
       webpack: {
         node: {
-          fs: "empty"
-        }
-      }
-    }
+          fs: 'empty',
+        },
+      },
+    },
   },
   getTestFramework() {
     let dependencies = this.project.dependencies();
@@ -32,7 +32,7 @@ module.exports = {
       ext: ['feature', 'spec', 'specification'],
       toTree(tree) {
         return new FeatureParser(tree, testFramework, self._options);
-      }
+      },
     });
   },
   blueprintsPath() {
@@ -45,5 +45,5 @@ module.exports = {
       options.persist = true;
     }
     this._options = options;
-  }
+  },
 };
