@@ -12,7 +12,7 @@ export default function (assert) {
       this.set('content', text);
       await render(hbs`
       {{#my-component}}
-        {{content}}
+        {{this.content}}
       {{/my-component}}
     `);
     }
